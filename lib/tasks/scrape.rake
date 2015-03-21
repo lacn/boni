@@ -1,7 +1,7 @@
 require "nokogiri"
 require "open-uri"
 
-task :scrape do
+task :scrape => :environment do
 	doc = Nokogiri::HTML(open(ENV['source_url']))
 
 	arr = doc.search('restaurantItem name prices', '//h1 | //h2 | //strong').to_a
