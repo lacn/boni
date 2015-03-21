@@ -4,7 +4,9 @@ module UpdateOrCreate
 
       module ClassMethods
         def update_or_create(attributes)
-          assign_or_new(attributes)
+          obj = assign_or_new(attributes)
+          obj.save
+          obj
         end
 
         def update_or_create!(attributes)
