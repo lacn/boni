@@ -1,8 +1,9 @@
 class PagesController < ApplicationController
   def home
-  	@hash = Gmaps4rails.build_markers(@users) do |user, marker|
-		  marker.lat user.latitude
-		  marker.lng user.longitude
+  	@restaurants = Restaurant.all
+  	@hash = Gmaps4rails.build_markers(@restaurants) do |restaurant, marker|
+		  marker.lat restaurant.latitude
+		  marker.lng restaurant.longitude
 		end
   end
 end
