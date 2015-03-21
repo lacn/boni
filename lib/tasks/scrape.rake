@@ -14,15 +14,17 @@ task :scrape => :environment do
 		Restaurant.where(name: data[0].content)
 						 	.update_or_create(name: data[0].content,
 						 									 address: filter_address(data[1].content)[:address],
+						 									 full_address: data[1].content.delete!('()'),
 															 city: city,
 															 price: filter_price(data[3].content))
 
-		puts data[0].content, filter_address(data[1].content)[:address], city.name, filter_price(data[3].content), "----------------------"
+		puts data[0].content, filter_address(data[1].content)[:address], city.name, filter_price(data[3].content), filter_address(data[1].content), "----------------------"
+		sleep 1
 	end
 end
 
 def filter_address(data)
-	data.delete! '()'
+	data.delete!('()')
 	data = data.split(',')
 	{address: data.first, city: data.last.strip.split('/')[0]}	
 end
