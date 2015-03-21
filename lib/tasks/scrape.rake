@@ -16,6 +16,8 @@ task :scrape => :environment do
 						 									 address: filter_address(data[1].content)[:address],
 															 city: city,
 															 price: filter_price(data[3].content))
+
+		puts data[0].content, filter_address(data[1].content)[:address], city.name, filter_price(data[3].content), "----------------------"
 	end
 end
 
