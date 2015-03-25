@@ -3,18 +3,10 @@
   var width = window.screen.availHeight;
 <% end %>
 
-<div style='width: 1440px;'>
-  <div id="map" style='width: 1440px; height: 700px;'></div>
+<div class="container">
+  <div id="map"></div>
 </div>
 
-<%= latitude %>
-,
-<%= longitude %>
-<br>
-<%= user_ip %>
-<br>
-<%= Geocoder.search(user_ip.to_s).first.latitude %>-
-<%= Geocoder.search(user_ip.to_s).first.longitude %>
 
 <%= javascript_tag do %>
 	handler = Gmaps.build('Google');
