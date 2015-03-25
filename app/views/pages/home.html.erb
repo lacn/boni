@@ -13,15 +13,15 @@
 <br>
 <%= user_ip %>
 <br>
-<%= Geocoder.search("193.2.176.10").first.latitude %>-
-<%= Geocoder.search("193.2.176.10").first.longitude %>
+<%= Geocoder.search(user_ip.to_s).first.latitude %>-
+<%= Geocoder.search(user_ip.to_s).first.longitude %>
 
 <%= javascript_tag do %>
 	handler = Gmaps.build('Google');
   handler.buildMap(
     {internal: {id: 'map'}},
     function(){
-      handler.map.centerOn([<%= Geocoder.search("193.2.176.10").first.latitude %>, <%= Geocoder.search("193.2.176.10").first.longitude %>]);
+      handler.map.centerOn([<%= latitude %>, <%= longitude %>]);
       handler.getMap().setZoom(15);
 
       handler.addMarkers(<%=raw @hash.to_json %>);
