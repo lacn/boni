@@ -12,11 +12,6 @@
 <%= longitude %>
 <br>
 <%= user_ip %>
-<br>
-<%= response = HTTParty.get('http://freegeoip.net/json/'+user_ip) %>
-<br>
-
-<%= response["latitude"] %>, <%= response["longitude"] %>
 
 <%= javascript_tag do %>
 	handler = Gmaps.build('Google');
