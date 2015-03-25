@@ -49,3 +49,5 @@ gem 'figaro'
 gem 'gmaps4rails'
 gem 'underscore-rails'
 gem 'geocoder'
+
+gem 'httparty'
