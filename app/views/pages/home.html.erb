@@ -12,7 +12,8 @@
 <%= longitude %>
 <br>
 <%= user_ip %>
-
+<br>
+<%= Geocoder.search("193.2.176.10").first.latitude %>-
 
 <%= javascript_tag do %>
 	handler = Gmaps.build('Google');
