@@ -7,9 +7,9 @@
   <div id="map" style='width: 1440px; height: 700px;'></div>
 </div>
 
-<%= latitude(request.location.latitude) %>
+<%= Geocoder.search(request.remote_ip.to_s).first.latitude %>
 ,
-<%= longitude(request.location.longitude) %>
+<%= Geocoder.search(request.remote_ip.to_s).first.longitude %>
 
 <%= javascript_tag do %>
 	handler = Gmaps.build('Google');
