@@ -1,18 +1,24 @@
-<div style='width: 1000px;'>
-  <div id="map" style='width: 1000px; height: 800px;'></div>
+<%= javascript_tag do %>
+  var width = window.screen.availWidth;
+  var width = window.screen.availHeight;
+<% end %>
+
+<div style='width: 1440px;'>
+  <div id="map" style='width: 1440px; height: 700px;'></div>
 </div>
 
 <%= javascript_tag do %>
 	handler = Gmaps.build('Google');
-	handler.buildMap({
-	    internal: {
-	      id: 'map'
-	    }
-	  },
-	  function(){
-	  	markers = handler.addMarkers(<%=raw @hash.to_json %>);
-	    handler.bounds.extendWith(markers);
+  handler.buildMap(
+    {internal: {id: 'map'}},
+    function(){
+      handler.map.centerOn([<%= latitude(request.location.latitude) %>, <%= longitude(request.location.longitude) %>]);
+      handler.getMap().setZoom(8);
+
+      markers = handler.addMarkers(<%=raw @hash.to_json %>);
+
+      handler.bounds.extendWith(markers);
 	    handler.fitMapToBounds();
-	  }
-	);
+    });
+
 <% end %>
