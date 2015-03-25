@@ -7,18 +7,12 @@
   <div id="map" style='width: 1440px; height: 700px;'></div>
 </div>
 
-<%= Geocoder.search(request.remote_ip.to_s).first.latitude %>
-,
-<%= Geocoder.search(request.remote_ip.to_s).first.longitude %>
-<br>
-<%= request.env["HTTP_X_FORWARDED_FOR"].try(:split, ',').try(:first) || request.env["REMOTE_ADDR"] %>
-
 <%= javascript_tag do %>
 	handler = Gmaps.build('Google');
   handler.buildMap(
     {internal: {id: 'map'}},
     function(){
-      handler.map.centerOn([<%= latitude(request.location.latitude) %>, <%= longitude(request.location.longitude) %>]);
+      handler.map.centerOn([<%= latitude %>, <%= longitude %>]);
       handler.getMap().setZoom(8);
 
       markers = handler.addMarkers(<%=raw @hash.to_json %>);
