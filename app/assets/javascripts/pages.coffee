@@ -40,8 +40,8 @@ buildMap = ->
       # updates stored map center point.
       google.maps.event.addDomListener handler.getMap(), 'idle', -> updateCenter handler
 
-  # Set listener for window resize event, updates map center point.
-  # The try..catch block is used in case of
-  $(window).resize -> try centerMap handler catch error
+      # Set listener for window resize event, updates centered point on map.
+      google.maps.event.addDomListener window, 'resize', -> centerMap handler
+
 
 window.buildMap = buildMap
