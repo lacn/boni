@@ -1,25 +1,43 @@
-<%= javascript_tag do %>
-  var width = window.screen.availWidth;
-  var width = window.screen.availHeight;
-<% end %>
-
 <div class="container">
   <div id="map"></div>
 </div>
 
 
 <%= javascript_tag do %>
-	handler = Gmaps.build('Google');
-  handler.buildMap(
-    {internal: {id: 'map'}},
-    function(){
-      handler.map.centerOn([<%= latitude %>, <%= longitude %>]);
-      handler.getMap().setZoom(15);
 
-      handler.addMarkers(<%=raw @hash.to_json %>);
+  (function() {
+    var Helper,
+      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-      //handler.bounds.extendWith(markers);
-	    handler.fitMapToBounds();
-    });
+    Helper = (function() {
+      function Helper() {
+        this.setCenter = __bind(this.setCenter, this);
+        this.getCenter = __bind(this.getCenter, this);
+        this.center = [<%= latitude %>, <%= longitude %>];
+      }
+
+      Helper.prototype.getCenter = function() {
+        return this.center;
+      };
+
+      Helper.prototype.setCenter = function(center) {
+        this.center = center;
+      };
+
+      Helper.prototype.AddMarkers = function(handler, extendBounds) {
+        extendBounds = extendBounds || true;
+        window.markers = handler.addMarkers(<%=raw @hash.to_json %>);
+        if(extendBounds) {
+          handler.bounds.extendWith(markers);
+        }
+      };
+
+      return Helper;
+
+    })();
+    window.Helper = new Helper();
+
+  }).call(this);
+
 
 <% end %>
