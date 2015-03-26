@@ -36,8 +36,9 @@ buildMap = ->
       # it's using json data from rails.
       Helper.AddMarkers handler
 
-  # Add event lisener for event of center changed
-  google.maps.event.addListener handler.getMap(), 'center_changed', -> updateCenter handler
+      # Set listener for map idle event (when everything updates after move, zoom or resize),
+      # updates stored map center point.
+      google.maps.event.addDomListener handler.getMap(), 'idle', -> updateCenter handler
 
   # Set listener for window resize event, updates map center point.
   # The try..catch block is used in case of
