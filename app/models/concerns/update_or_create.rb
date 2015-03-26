@@ -14,16 +14,20 @@ module UpdateOrCreate
         end
 
         def assign_or_new(attributes)
-          Version.first_or_create
           if obj = first
             old = first
           else
             obj = new
-            Version.first.update_attribute(:version, DateTime.now.to_i)
+            new_version
           end
           obj.assign_attributes(attributes)
-          Version.first.update_attribute(:version, DateTime.now.to_i) unless old.attributes == obj.attributes
+          new_version unless old.attributes == obj.attributes
           obj
+        end
+
+        def new_version
+          Version.first_or_create
+          Version.first.update_attribute(:version, DateTime.now.to_i)
         end
       end
     end
