@@ -4,40 +4,8 @@
 
 
 <%= javascript_tag do %>
-
-  (function() {
-    var Helper,
-      __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-    Helper = (function() {
-      function Helper() {
-        this.setCenter = __bind(this.setCenter, this);
-        this.getCenter = __bind(this.getCenter, this);
-        this.center = [<%= latitude %>, <%= longitude %>];
-      }
-
-      Helper.prototype.getCenter = function() {
-        return this.center;
-      };
-
-      Helper.prototype.setCenter = function(center) {
-        this.center = center;
-      };
-
-      Helper.prototype.AddMarkers = function(handler, extendBounds) {
-        extendBounds = extendBounds || true;
-        window.markers = handler.addMarkers(<%=raw @hash.to_json %>);
-        if(extendBounds) {
-          handler.bounds.extendWith(markers);
-        }
-      };
-
-      return Helper;
-
-    })();
-    window.Helper = new Helper();
-
-  }).call(this);
-
-
+  $(function() {
+    window.Helper = new HandlerHelper([<%= latitude %>, <%= longitude %>]);
+    buildMap();
+  });
 <% end %>
