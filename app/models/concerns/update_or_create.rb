@@ -5,7 +5,7 @@ module UpdateOrCreate
       module ClassMethods
         def update_or_create(attributes)
           obj = assign_or_new(attributes)
-          puts obj.save
+          obj.save
           obj
         end
 
@@ -14,14 +14,9 @@ module UpdateOrCreate
         end
 
         def assign_or_new(attributes)
-          if obj = first
-            old = first
-          else
-            obj = new
-            new_version
-          end
+          old, obj = first || new, first || new
           obj.assign_attributes(attributes)
-          new_version unless old.attributes == obj.attributes
+          new_version unless old.attributes == obj.attributes && !old.new_record?
           obj
         end
 
