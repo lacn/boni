@@ -14,11 +14,11 @@
     {internal: {id: 'map'}},
     function(){
       handler.map.centerOn([<%= latitude %>, <%= longitude %>]);
-      handler.getMap().setZoom(8);
+      handler.getMap().setZoom(15);
 
-      markers = handler.addMarkers(<%=raw @hash.to_json %>);
+      handler.addMarkers(<%=raw @hash.to_json %>);
 
-      handler.bounds.extendWith(markers);
+      //handler.bounds.extendWith(markers);
 	    handler.fitMapToBounds();
     });
 
