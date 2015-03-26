@@ -54,3 +54,5 @@ gem 'httparty'
 gem 'rails_12factor', group: :production
 
 gem 'newrelic_rpm'
+
+gem 'react-rails', github: 'reactjs/react-rails'
