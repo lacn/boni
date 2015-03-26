@@ -5,7 +5,7 @@ module UpdateOrCreate
       module ClassMethods
         def update_or_create(attributes)
           obj = assign_or_new(attributes)
-          obj.save
+          puts obj.save
           obj
         end
 
@@ -14,8 +14,15 @@ module UpdateOrCreate
         end
 
         def assign_or_new(attributes)
-          obj = first || new
+          Version.first_or_create
+          if obj = first
+            old = first
+          else
+            obj = new
+            Version.first.update_attribute(:version, DateTime.now.to_i)
+          end
           obj.assign_attributes(attributes)
+          Version.first.update_attribute(:version, DateTime.now.to_i) unless old.attributes == obj.attributes
           obj
         end
       end
