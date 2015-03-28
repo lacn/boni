@@ -1,25 +1,12 @@
-<%= javascript_tag do %>
-  var width = window.screen.availWidth;
-  var width = window.screen.availHeight;
-<% end %>
-
 <div class="container">
   <div id="map"></div>
 </div>
 
 
 <%= javascript_tag do %>
-	handler = Gmaps.build('Google');
-  handler.buildMap(
-    {internal: {id: 'map'}},
-    function(){
-      handler.map.centerOn([<%= latitude %>, <%= longitude %>]);
-      handler.getMap().setZoom(15);
-
-      handler.addMarkers(<%=raw @hash.to_json %>);
-
-      //handler.bounds.extendWith(markers);
-	    handler.fitMapToBounds();
-    });
-
+  $(function() {
+    var initialCenter = [<%= latitude %>, <%= longitude %>];
+    window.Helper = new HandlerHelper(initialCenter);
+    buildMap(initialCenter);
+  });
 <% end %>
