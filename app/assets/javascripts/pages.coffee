@@ -10,8 +10,8 @@ ZOOM_LEVEL = 15
  * Using Helper object to get center (initialized from rails).
  * @param {GoogleMapsHandler} handler Handler of Google Maps object.
 ###
-centerMap = (handler) ->
-  handler.map.centerOn Helper.getCenter()
+centerMap = (handler, center = Helper.getCenter()) ->
+  handler.map.centerOn center
 
 ###*
  * Update center location stored in Helper object.
@@ -20,7 +20,7 @@ centerMap = (handler) ->
 updateCenter = (handler) ->
   Helper.setCenter handler.map.getServiceObject().getCenter()
 
-buildMap = ->
+buildMap = (center) ->
   window.handler = Gmaps.build 'Google'
   handler.buildMap
     internal:
@@ -29,7 +29,7 @@ buildMap = ->
     # Callback function (called when map is initialized).
     ->
       # Use centerMap function to center map on initial position.
-      centerMap handler
+      centerMap handler, center
       handler.getMap().setZoom ZOOM_LEVEL
 
       # Add markers with (static) helper function,

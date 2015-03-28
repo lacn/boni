@@ -5,7 +5,8 @@
 
 <%= javascript_tag do %>
   $(function() {
-    window.Helper = new HandlerHelper([<%= latitude %>, <%= longitude %>]);
-    buildMap();
+    var initialCenter = [<%= latitude %>, <%= longitude %>];
+    window.Helper = new HandlerHelper(initialCenter);
+    buildMap(initialCenter);
   });
 <% end %>
