@@ -15,11 +15,15 @@ class PagesController < ApplicationController
       marker.lat  restaurant.latitude
       marker.lng  restaurant.longitude
       marker.json({name: restaurant.name, address: restaurant.address, city: restaurant.city.name, price: restaurant.price_in_eur })
-      # marker.infowindow render_to_string(:partial => "/pages/infowindow",
-      #                                    :locals => { :restaurant => restaurant})
     end
     respond_to do |format|
       format.json { render json: @hash }
+    end
+  end
+
+  def version
+    respond_to do |format|
+      format.json { render json: Version.first }
     end
   end
 end

@@ -14,9 +14,15 @@ module UpdateOrCreate
         end
 
         def assign_or_new(attributes)
-          obj = first || new
+          old, obj = first || new, first || new
           obj.assign_attributes(attributes)
+          new_version unless old.attributes == obj.attributes && !old.new_record?
           obj
+        end
+
+        def new_version
+          Version.first_or_create
+          Version.first.update_attribute(:version, DateTime.now.to_i)
         end
       end
     end
