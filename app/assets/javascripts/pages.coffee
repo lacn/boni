@@ -5,24 +5,30 @@
 ###
 ZOOM_LEVEL = 15
 
-Helper = new HandlerHelper center
-
-###*
- * Centers the map of passed handler.
- * Using Helper object to get center (initialized from rails).
- * @param {GoogleMapsHandler} handler Handler of Google Maps object.
-###
-centerMap = (handler, center = Helper.getCenter()) ->
-  handler.map.centerOn center
-
-###*
- * Update center location stored in Helper object.
- * @param {GoogleMapsHandler} handler Handler of Google Maps object.
-###
-updateCenter = (handler) ->
-  Helper.setCenter handler.map.getServiceObject().getCenter()
-
 buildMap = (center) ->
+  ###*
+   * Instantiate HandlerHelper with given `center`.
+   * @type {HandlerHelper}
+  ###
+  Helper = new HandlerHelper center
+  ###*
+   * Centers the map of passed handler.
+   * Using Helper object to get center (initialized from rails).
+   * @param {GoogleMapsHandler} handler Handler of Google Maps object.
+  ###
+  centerMap = (handler, center = Helper.getCenter()) ->
+    handler.map.centerOn center
+
+  ###*
+   * Update center location stored in Helper object.
+   * @param {GoogleMapsHandler} handler Handler of Google Maps object.
+  ###
+  updateCenter = (handler) ->
+    Helper.setCenter handler.map.getServiceObject().getCenter()
+  ###*
+   * Instantiate a Google maps handler.
+   * @type {Gmaps handler}
+  ###
   handler = Gmaps.build 'Google'
   # Build a map inside `#map` element.
   handler.buildMap
