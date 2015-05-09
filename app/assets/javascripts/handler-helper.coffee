@@ -99,14 +99,12 @@ class HandlerHelper
   VESION_URL: '/version'
 
   ###*
-   * Default constructor, set property center (implicit this.center = center),
-   * 	instantiate `RestaurantStorage` and start server version request (async).
+   * Set property center (implicit this.center = center), instantiate `RestaurantStorage`.
    * @param  {Array<Number>} @center Array [lat, lng] of currently centered location.
   ###
   constructor: (@center) ->
     @restaurantStorage = new RestaurantStorage()
     @version = 0
-    @versionRequest = $.getJSON @VESION_URL, (data) -> @version = data.version
 
   getCenter: => @center
   setCenter: (@center) =>
@@ -117,6 +115,8 @@ class HandlerHelper
    * @param {Function} callback         Callback function called after markers are added.
   ###
   AddMarkers: (handler, callback) ->
+    # Begin get server version request, store request to resolve it later.
+    versionRequest = $.getJSON @VESION_URL, (data) => @version = data.version
     ###*
      * Make maps marker infowindow.
      * @param {Restaurant} obj Restaurant object (described at `RestaurantStorage.getRestaurants`).
@@ -162,7 +162,7 @@ class HandlerHelper
         makeMarkers @restaurantStorage.getRestaurants()
     # If version is defined (was recieved from server), call loadData(), otherwise
     #   call loadData with `versionRequest`'s response after request completes.
-    if @version then loadData() else @versionRequest.done loadData
+    if @version then loadData() else versionRequest.done loadData
 
 # Bind HandlerHelper class to window so it can be accessed from other files.
 window.HandlerHelper = HandlerHelper
