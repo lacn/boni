@@ -1,10 +1,13 @@
 class RestaurantStorage
 
+  # Base name of localStorage property.
   OBJECT_NAME: 'restaurants_cache'
+  # Name of data property.
+  DATA_NAME: "#{@OBJECT_NAME}_data"
+  # Name of version property.
+  VERSION_NAME: "#{@OBJECT_NAME}_version"
 
   constructor: ->
-    @DATA_NAME = "#{@OBJECT_NAME}_data"
-    @VERSION_NAME = "#{@OBJECT_NAME}_version"
 
   getRestaurants: ->
     try
