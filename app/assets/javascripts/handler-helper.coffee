@@ -53,14 +53,15 @@ class RestaurantStorage
        * @return {String}        Escaped string
       ###
       escape = (string) ->
-        string.replace(/\\n/g, "\\n")
-          .replace(/\\'/g, "\\'")
-          .replace(/\\"/g, '\\"')
-          .replace(/\\&/g, "\\&")
-          .replace(/\\r/g, "\\r")
-          .replace(/\\t/g, "\\t")
-          .replace(/\\b/g, "\\b")
-          .replace(/\\f/g, "\\f")
+        string
+          .replace /\\n/g, "\\n"
+          .replace /\\'/g, "\\'"
+          .replace /\\"/g, '\\"'
+          .replace /\\&/g, "\\&"
+          .replace /\\r/g, "\\r"
+          .replace /\\t/g, "\\t"
+          .replace /\\b/g, "\\b"
+          .replace /\\f/g, "\\f"
       # Use timeout to make adding (takes ~3s) async.
       setTimeout (=> localStorage[@DATA_NAME] = escape JSON.stringify restaurantsObj), 1
 
