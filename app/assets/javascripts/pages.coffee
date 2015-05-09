@@ -39,10 +39,10 @@ buildMap = (center) ->
     ->
       # Add markers to map from localStorage or server data.
       Helper.AddMarkers handler, ->
-        # Center map on initial position.
-        centerMap handler, center
         # Fit map to added markers bounds.
         handler.fitMapToBounds()
+        # Center map on initial position.
+        centerMap handler, center
         # Set map zoom to `ZOOM_LEVEL` value.
         handler.getMap().setZoom ZOOM_LEVEL
 
