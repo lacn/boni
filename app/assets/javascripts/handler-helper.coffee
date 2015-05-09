@@ -143,13 +143,13 @@ class HandlerHelper
       # Call `callback` if it was given.
       callback() if callback
 
-    loadData = (data) =>
-      @version = data.version if data
     ###*
      * Load restaurants data from localStorage or server.
      * @param {Array<Restaurant>} versionData (optional) Data from `versionRequest` response.
     ###
+    loadData = (versionData) =>
       # If called as .done callback (`versionData` was recieved), update `this.version` property.
+      @version = versionData.version if versionData
       if not @restaurantStorage.isUpToDate @version
         # If local data is not up to date with server data, get data from server.
         $.getJSON @RESTAURANTS_URL, (data) =>
