@@ -4,22 +4,22 @@ class RestaurantStorage
    * Base name of localStorage property.
    * @type {String}
   ###
-  OBJECT_NAME: 'restaurants_cache'
+  OBJECT_BASE_NAME = 'restaurants_cache'
   ###*
    * Name of data property.
    * @type {String}
   ###
-  DATA_NAME: "#{@OBJECT_NAME}_data"
+  DATA_NAME = "#{OBJECT_BASE_NAME}_data"
   ###*
    * Name of version property.
    * @type {String}
   ###
-  VERSION_NAME: "#{@OBJECT_NAME}_version"
+  VERSION_NAME = "#{OBJECT_BASE_NAME}_version"
   ###*
    * Fallback version value, used if localStorage version is not defined.
    * @type {Number}
   ###
-  DEFAULT_VERSION: 0
+  DEFAULT_VERSION = 0
 
   ###*
    * Get restaurants stored in localStorage object.
@@ -36,7 +36,7 @@ class RestaurantStorage
   getRestaurants: ->
     # Try to parse localStorage data object, return empty array if failed. (implicit return)
     try
-      JSON.parse localStorage[@DATA_NAME]
+      JSON.parse localStorage[DATA_NAME]
     catch e
       []
 
@@ -63,20 +63,20 @@ class RestaurantStorage
           .replace /\\b/g, "\\b"
           .replace /\\f/g, "\\f"
       # Use timeout to make adding (takes ~3s) async.
-      setTimeout (=> localStorage[@DATA_NAME] = escape JSON.stringify restaurantsObj), 1
+      setTimeout (-> localStorage[DATA_NAME] = escape JSON.stringify restaurantsObj), 1
 
   ###*
    * Get version stored in localStorage object.
    *
    * @return {Number} Version stored in localStorage (should be in form of timestamp).
   ###
-  getVersion: => JSON.parse localStorage[@VERSION_NAME] or @DEFAULT_VERSION
+  getVersion: -> JSON.parse localStorage[VERSION_NAME] or DEFAULT_VERSION
 
   ###*
    * Set/update version number stored in localStorage object.
    * @param {Number} version New version number to be stored.
   ###
-  setVersion: (version = @DEFAULT_VERSION) => localStorage[@VERSION_NAME] = version
+  setVersion: (version = DEFAULT_VERSION) -> localStorage[VERSION_NAME] = version
 
   ###*
    * Check if given version timestamp is up to date with stored data.
