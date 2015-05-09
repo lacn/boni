@@ -154,7 +154,6 @@ class HandlerHelper
     ###
       # If called as .done callback (`versionData` was recieved), update `this.version` property.
       if not @restaurantStorage.isUpToDate @version
-        console.log 'load from server'
         # If local data is not up to date with server data, get data from server.
         $.getJSON @RESTAURANTS_URL, (data) =>
           # Update locally stored data.
@@ -162,7 +161,6 @@ class HandlerHelper
           # Add data as map markers.
           makeMarkers data
       else
-        console.log 'load from cache'
         # Get local data and add it as map markers.
         makeMarkers @restaurantStorage.getRestaurants()
     # If version is defined (was recieved from server), call loadData(), otherwise
