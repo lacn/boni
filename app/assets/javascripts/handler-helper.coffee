@@ -6,6 +6,8 @@ class RestaurantStorage
   DATA_NAME: "#{@OBJECT_NAME}_data"
   # Name of version property.
   VERSION_NAME: "#{@OBJECT_NAME}_version"
+  # Fallback version value, used if localStorage version is not defined.
+  DEFAULT_VERSION: 0
 
   constructor: ->
 
@@ -33,8 +35,10 @@ class RestaurantStorage
     catch e
       false
 
-  isUpToDate: (timestamp) ->
-    JSON.parse(localStorage[@VERSION_NAME] or 0) is timestamp
+  getVersion: => JSON.parse localStorage[@VERSION_NAME] or @DEFAULT_VERSION
+
+  setVersion: (version = @DEFAULT_VERSION) => localStorage[@VERSION_NAME] = version
+
 
 
 class HandlerHelper
