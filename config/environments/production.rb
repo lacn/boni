@@ -78,4 +78,21 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.react.variant = :production
+
+  config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[ERROR] ",
+      :sender_address => %{"Boni" <boni@boni.si>},
+      :exception_recipients => ENV["EXCEPTION_RECIPIENT"]
+    }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address =>              'smtp.mandrillapp.com',
+    :port =>                 '587',
+    :user_name =>             ENV["MANDRILL_USERNAME"],
+    :password =>              ENV["MANDRILL_APIKEY"],
+    :domain =>               'heroku.com',
+    :authentication =>       :plain
+  }
 end
