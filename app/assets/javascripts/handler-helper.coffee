@@ -59,9 +59,6 @@ class HandlerHelper
     makeMarkers = (data) ->
       markers = handler.addMarkers data.map makeInfowindow
       handler.bounds.extendWith markers
-      # Fit map to bounds of markers, meaning it will
-      # zoom in to just fit all the markers added.
-      handler.fitMapToBounds()
 
     loadData = (data) =>
       @version = data.version if data
