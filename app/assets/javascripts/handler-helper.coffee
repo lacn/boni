@@ -130,14 +130,14 @@ class HandlerHelper
       <p>#{obj.address}, #{obj.city}</p>
       <p>cena doplačila: #{obj.price} &#8364;</p>"""
 
-    makeMarkers = (data) ->
-      markers = handler.addMarkers data.map makeInfowindow
     ###*
      * Turn `restaurants` into infowindows and add them to map as markers.
      * @param {Array<Restaurant>} restaurants Array of restaurants from localStorage or server.
     ###
+    makeMarkers = (restaurants) ->
       # Call makeInfowindow for each `Restaurant` in `restaurants`, returns an array of
       #   infowindows which are added to map as markers.
+      markers = handler.addMarkers restaurants.map makeInfowindow
       # Extend map bounds with markers - make all markers fit to map.
       handler.bounds.extendWith markers
       # Call `callback` if it was given.
