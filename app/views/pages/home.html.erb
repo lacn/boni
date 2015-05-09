@@ -4,7 +4,7 @@
 
 
 <%= javascript_tag do %>
-  $(function() {
+  window.onload = function() {
     buildMap([<%= latitude %>, <%= longitude %>]);
-  });
+  }
 <% end %>
