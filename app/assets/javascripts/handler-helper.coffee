@@ -150,16 +150,17 @@ class HandlerHelper
     loadData = (versionData) =>
       # If called as .done callback (`versionData` was recieved), update `this.version` property.
       @version = versionData.version if versionData
-      if not @restaurantStorage.isUpToDate @version
-        # If local data is not up to date with server data, get data from server.
-        $.getJSON @RESTAURANTS_URL, (data) =>
-          # Update locally stored data.
-          @restaurantStorage.setRestaurants data
-          # Add data as map markers.
-          makeMarkers data
+      if @restaurantStorage.isUpToDate @version
+        # Get local data and add it as map markers, make it accessible by .done function
+        # to simulate getJSON request deferred resolve.
+        getDataReq = done: @restaurantStorage.getRestaurants
       else
-        # Get local data and add it as map markers.
-        makeMarkers @restaurantStorage.getRestaurants()
+        # If local data is not up to date with server data, get data from server.
+        # Use `RestaurantStorage.setRestaurants` to update locally stored data.
+        # Store request to resolve it later.
+        getDataReq = $.getJSON @RESTAURANTS_URL, @restaurantStorage.setRestaurants
+      # Add recieved data as map markers.
+      getDataReq.done makeMarkers
     # If version is defined (was recieved from server), call loadData(), otherwise
     #   call loadData with `versionRequest`'s response after request completes.
     if @version then loadData() else versionRequest.done loadData
