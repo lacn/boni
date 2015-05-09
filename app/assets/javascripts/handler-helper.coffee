@@ -39,6 +39,7 @@ class RestaurantStorage
 
   setVersion: (version = @DEFAULT_VERSION) => localStorage[@VERSION_NAME] = version
 
+  isUpToDate: (dataTimestamp) => @getVersion is dataTimestamp
 
 
 class HandlerHelper
