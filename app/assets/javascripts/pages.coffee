@@ -21,6 +21,7 @@ updateCenter = (handler) ->
   Helper.setCenter handler.map.getServiceObject().getCenter()
 
 buildMap = (center) ->
+  Helper = new HandlerHelper center
   window.handler = Gmaps.build 'Google'
   handler.buildMap
     internal:
