@@ -5,6 +5,8 @@
 ###
 ZOOM_LEVEL = 15
 
+Helper = new HandlerHelper center
+
 ###*
  * Centers the map of passed handler.
  * Using Helper object to get center (initialized from rails).
@@ -21,7 +23,6 @@ updateCenter = (handler) ->
   Helper.setCenter handler.map.getServiceObject().getCenter()
 
 buildMap = (center) ->
-  Helper = new HandlerHelper center
   window.handler = Gmaps.build 'Google'
   handler.buildMap
     internal:
