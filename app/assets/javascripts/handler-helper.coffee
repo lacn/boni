@@ -21,8 +21,6 @@ class RestaurantStorage
   ###
   DEFAULT_VERSION: 0
 
-  constructor: ->
-
   ###*
    * Get restaurants stored in localStorage object.
    * `Restaurant` object sturcture:
