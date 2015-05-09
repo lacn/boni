@@ -23,7 +23,7 @@ updateCenter = (handler) ->
   Helper.setCenter handler.map.getServiceObject().getCenter()
 
 buildMap = (center) ->
-  window.handler = Gmaps.build 'Google'
+  handler = Gmaps.build 'Google'
   handler.buildMap
     internal:
       # Build map in DOM element with id `map`.
