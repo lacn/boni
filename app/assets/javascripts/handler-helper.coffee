@@ -47,7 +47,7 @@ class HandlerHelper
   getCenter: => @center
   setCenter: (@center) =>
 
-  AddMarkers: (handler) ->
+  AddMarkers: (handler, callback) ->
     makeInfowindow = (obj) ->
       lat: obj.lat
       lng: obj.lng
@@ -59,6 +59,7 @@ class HandlerHelper
     makeMarkers = (data) ->
       markers = handler.addMarkers data.map makeInfowindow
       handler.bounds.extendWith markers
+      callback() if callback
 
     loadData = (data) =>
       @version = data.version if data

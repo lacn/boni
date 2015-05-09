@@ -30,13 +30,13 @@ buildMap = (center) ->
       id: 'map'
     # Callback function (called when map is initialized).
     ->
-      # Use centerMap function to center map on initial position.
-      centerMap handler, center
-      handler.getMap().setZoom ZOOM_LEVEL
-
       # Add markers with (static) helper function,
       # it's using json data from rails.
-      Helper.AddMarkers handler
+      Helper.AddMarkers handler, ->
+        # Use centerMap function to center map on initial position.
+        centerMap handler, center
+        handler.fitMapToBounds()
+        handler.getMap().setZoom ZOOM_LEVEL
 
       # Set listener for map idle event (when everything updates after move, zoom or resize),
       # updates stored map center point.
