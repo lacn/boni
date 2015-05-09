@@ -64,7 +64,6 @@ class RestaurantStorage
       setTimeout =>
         localStorage[@DATA_NAME] = escape JSON.stringify restaurantsObj
       , 1
-    catch e
 
   ###*
    * Get version stored in localStorage object.
