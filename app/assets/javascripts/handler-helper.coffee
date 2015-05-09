@@ -78,11 +78,11 @@ class RestaurantStorage
   ###
   setVersion: (version = @DEFAULT_VERSION) => localStorage[@VERSION_NAME] = version
 
-  isUpToDate: (dataTimestamp) => @getVersion is dataTimestamp
   ###*
    * Check if given version timestamp is up to date with stored data.
    * @param {Number} serverTimestamp Timestamp from server.
   ###
+  isUpToDate: (serverTimestamp) => @getVersion is serverTimestamp
 
 
 class HandlerHelper
