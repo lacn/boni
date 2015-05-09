@@ -61,9 +61,8 @@ class RestaurantStorage
           .replace(/\\t/g, "\\t")
           .replace(/\\b/g, "\\b")
           .replace(/\\f/g, "\\f")
-      setTimeout =>
-        localStorage[@DATA_NAME] = escape JSON.stringify restaurantsObj
-      , 1
+      # Use timeout to make adding (takes ~3s) async.
+      setTimeout (=> localStorage[@DATA_NAME] = escape JSON.stringify restaurantsObj), 1
 
   ###*
    * Get version stored in localStorage object.
