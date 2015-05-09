@@ -40,11 +40,11 @@ class RestaurantStorage
     catch e
       []
 
-  addRestaurants: (restaurantsObj) ->
   ###*
    * Store given restaurants data in localStorage object.
    * @param {Array<Restaurant>} restaurantsObj Array of restaurats.
   ###
+  setRestaurants: (restaurantsObj) ->
     # Using try in case of JSON.stringify error.
     try
       ###*
@@ -157,8 +157,8 @@ class HandlerHelper
         console.log 'load from server'
         # If local data is not up to date with server data, get data from server.
         $.getJSON @RESTAURANTS_URL, (data) =>
-          @restaurantStorage.addRestaurants data
           # Update locally stored data.
+          @restaurantStorage.setRestaurants data
           # Add data as map markers.
           makeMarkers data
       else
