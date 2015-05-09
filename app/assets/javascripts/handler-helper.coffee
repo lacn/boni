@@ -31,16 +31,18 @@ class RestaurantStorage
       false
 
   isUpToDate: (timestamp) ->
-    !!localStorage[@DATA_NAME]
+    JSON.parse(localStorage[@VERSION_NAME] or 0) is timestamp
 
 
 class HandlerHelper
 
   RESTAURANTS_URL: '/restaurants'
+  VESION_URL: '/version'
 
   constructor: (@center) ->
     @restaurantStorage = new RestaurantStorage()
-    window.test = @restaurantStorage
+    @version = 0
+    @versionRequest = $.getJSON @VESION_URL, (data) -> @version = data.version
 
   getCenter: => @center
   setCenter: (@center) =>
@@ -61,13 +63,17 @@ class HandlerHelper
       # zoom in to just fit all the markers added.
       handler.fitMapToBounds()
 
-    if not @restaurantStorage.isUpToDate Date.now()
-      console.log 'load from server'
-      $.getJSON @RESTAURANTS_URL, (data) =>
-        @restaurantStorage.addRestaurants data
-        makeMarkers data
-    else
-      console.log 'load from cache'
-      makeMarkers @restaurantStorage.getRestaurants()
+    loadData = (data) =>
+      @version = data.version if data
+      if not @restaurantStorage.isUpToDate @version
+        console.log 'load from server'
+        $.getJSON @RESTAURANTS_URL, (data) =>
+          @restaurantStorage.addRestaurants data
+          makeMarkers data
+      else
+        console.log 'load from cache'
+        makeMarkers @restaurantStorage.getRestaurants()
+
+    if @version then loadData() else @versionRequest.done loadData
 
 window.HandlerHelper = HandlerHelper
