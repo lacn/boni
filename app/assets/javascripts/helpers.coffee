@@ -222,6 +222,12 @@ class RestaurantStorage
 class HandlerHelper
 
   ###*
+   * DOM element class when watching location.
+   * @type {String}
+  ###
+  WATCHING_CLASS = 'active'
+
+  ###*
    * Set property center (implicit this.center = center), instantiate `RestaurantStorage`.
    * @param  {Array<Number>} @center Array [lat, lng] of currently centered location.
   ###
@@ -242,6 +248,7 @@ class HandlerHelper
     if navigator.geolocation?
       # If `geolocation` is available in browser, begin watching for position changes.
       @geolocationWatchID = navigator.geolocation.watchPosition (position) =>
+        HandlerHelper.addClass @watchIconEl, WATCHING_CLASS
         # Resolve all watchers with array of [lat, lng] (new map position).
         deferred.resolveAll [position.coords.latitude, position.coords.longitude], true
     else
@@ -256,6 +263,7 @@ class HandlerHelper
   endGeolocationWatch: =>
     if @isWatchingGeolocation()
       navigator.geolocation.clearWatch @geolocationWatchID
+      HandlerHelper.removeClass @watchIconEl, WATCHING_CLASS
       @geolocationWatchID = undefined
 
   ###*
