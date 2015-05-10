@@ -234,11 +234,11 @@ class HandlerHelper
 
   getGeolocation: =>
     deferred = new DeferHandler true
-    if 'geolocation' not in navigator
-      deferred.resolveAll @center, true
-    else
+    if navigator.geolocation?
       navigator.geolocation.watchPosition (position) ->
         deferred.resolveAll [position.coords.latitude, position.coords.longitude], true
+    else
+      deferred.resolveAll @center, false
     deferred
 
   ###*
