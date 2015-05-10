@@ -263,6 +263,32 @@ class HandlerHelper
   ###
   isWatchingGeolocation: => @geolocationWatchID?
 
+  ###*
+   * Add a class to DOM element if not added already.
+   * @param {Element} domEl     Element to add a class to.
+   * @param {String} className  Name of class to be added.
+  ###
+  @addClass: (domEl, className) ->
+    classes = domEl.className.split ' '
+    # Add `className` to classes if `className` doesn't exist in `domEl`'s class list.
+    classes.push className if classes.indexOf(className) < 0
+    # Put `classes` array back into string form.
+    domEl.className = classes.join ' '
+
+  ###*
+   * Remove class from DOM element if it exists.
+   * @param {Element} domEl     Element to add a class to.
+   * @param {String} className  Name of class to be removed.
+  ###
+  @removeClass: (domEl, className) ->
+    classes = domEl.className.split ' '
+    index = classes.indexOf className
+    # Remov `className` from classes if `className` exist in `domEl`'s class list.
+    classes.splice index, 1 if index >= 0
+    # Put `classes` array back into string form.
+    domEl.className = classes.join ' '
+
+  ###*
    * Add server restaurants as map markers.
    * @param {Gmaps handler}   handler   Handler object for maps.
    * @param {Function} callback         Callback function called after markers are added.
