@@ -56,6 +56,8 @@ buildMap = (center) ->
           updateCenter handler
           # Location loading done, hide loader icon.
           HandlerHelper.removeClass loaderIconEl, 'active'
+          # Zoom map to initial zoom level.
+          handler.getMap().setZoom ZOOM_LEVEL
       endGeolocationWatch = ->
         # Show loader icon.
         HandlerHelper.addClass loaderIconEl, 'active'
