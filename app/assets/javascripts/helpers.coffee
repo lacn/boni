@@ -232,13 +232,22 @@ class HandlerHelper
   getCenter: => @center
   setCenter: (@center) =>
 
+  ###*
+   * Create deferred geolocation request.
+   * @return {DeferHandler} Deferred request for geolocation, resolved when
+  ###
   getGeolocation: =>
+    # Instantiate DeferHandler with watch option.
     deferred = new DeferHandler true
     if navigator.geolocation?
+      # If `geolocation` is available in browser, begin watching for position changes.
       navigator.geolocation.watchPosition (position) ->
+        # Resolve all watchers with array of [lat, lng] (new map position).
         deferred.resolveAll [position.coords.latitude, position.coords.longitude], true
     else
+      # The `geolocation` property is not available, resolve with currently stored `center`.
       deferred.resolveAll @center, false
+    # Return reference to DeferHandler.
     deferred
 
   ###*
