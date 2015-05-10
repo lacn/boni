@@ -11,6 +11,7 @@ buildMap = (center) ->
    * @type {Element}
   ###
   watchIconEl = document.getElementById 'follow-location'
+  loaderIconEl = document.getElementById 'location-loading'
   ###*
    * Instantiate HandlerHelper with given `center`.
    * @type {HandlerHelper}
@@ -45,15 +46,23 @@ buildMap = (center) ->
       # Watch starts at the beginning and ends when map is first dragged
       #   or when user presses the `#follow-location` button.
       startGeolocationWatch = ->
+        # Show loader icon.
+        HandlerHelper.addClass loaderIconEl, 'active'
         # Get getGeolocation using browser API.
         Helper.startGeolocationWatch().done (newCenter) ->
           # Center map on just updated `newCenter`.
           centerMap handler, newCenter
           # Store `newCenter`, which is currently map center.
           updateCenter handler
+          # Location loading done, hide loader icon.
+          HandlerHelper.removeClass loaderIconEl, 'active'
       endGeolocationWatch = ->
+        # Show loader icon.
+        HandlerHelper.addClass loaderIconEl, 'active'
         # Call helper method to end watching for geolocation changes.
         Helper.endGeolocationWatch()
+        # Location watch disabled, hide loader icon.
+        HandlerHelper.removeClass loaderIconEl, 'active'
 
       # Add markers to map from localStorage or server data.
       Helper.AddMarkers handler, ->
