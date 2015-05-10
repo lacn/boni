@@ -241,7 +241,7 @@ class HandlerHelper
     deferred = new DeferHandler true
     if navigator.geolocation?
       # If `geolocation` is available in browser, begin watching for position changes.
-      navigator.geolocation.watchPosition (position) ->
+      @geolocationWatchID = navigator.geolocation.watchPosition (position) =>
         # Resolve all watchers with array of [lat, lng] (new map position).
         deferred.resolveAll [position.coords.latitude, position.coords.longitude], true
     else
@@ -251,6 +251,18 @@ class HandlerHelper
     deferred
 
   ###*
+   * Clear geolocation watcher if it's set.
+  ###
+  endGeolocationWatch: =>
+    if @isWatchingGeolocation()
+      navigator.geolocation.clearWatch @geolocationWatchID
+      @geolocationWatchID = undefined
+
+  ###*
+   * @return True if currently watching for geolocation, false otherwise.
+  ###
+  isWatchingGeolocation: => @geolocationWatchID?
+
    * Add server restaurants as map markers.
    * @param {Gmaps handler}   handler   Handler object for maps.
    * @param {Function} callback         Callback function called after markers are added.
