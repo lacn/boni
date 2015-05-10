@@ -315,7 +315,7 @@ class HandlerHelper
       infowindow: """
       <p><b>#{obj.name}</b></p>
       <p>#{obj.address}, #{obj.city}</p>
-      <p>cena doplačila: #{obj.price} &#8364;</p>"""
+      <p>Doplačilo: #{obj.price} &#8364;</p>"""
 
     ###*
      * Turn `restaurants` into infowindows and add them to map as markers.
