@@ -38,7 +38,11 @@ buildMap = (center) ->
     # Callback function (called when map is initialized).
     ->
       # Get getGeolocation using browser API.
-      Helper.getGeolocation().done (newCenter) -> centerMap handler, newCenter
+      Helper.getGeolocation().done (newCenter) ->
+        # Center map on just updated `newCenter`.
+        centerMap handler, newCenter
+        # Store `newCenter`, which is currently map center.
+        updateCenter()
       # Add markers to map from localStorage or server data.
       Helper.AddMarkers handler, ->
         # Fit map to added markers bounds.
