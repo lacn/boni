@@ -63,6 +63,10 @@ buildMap = (center) ->
         handler.getMap().setZoom ZOOM_LEVEL
         startGeolocationWatch()
 
+      # Listen for `watchIconEl` DOM click events.
+      watchIconEl.addEventListener 'click', ->
+        # Begin or end watching geolocation, this will implicitly toggle `active` class.
+        (if Helper.isWatchingGeolocation() then endGeolocationWatch else startGeolocationWatch)()
 
       # Set listener for map idle event (when everything updates after move, zoom or resize),
       # updates stored map center point.
