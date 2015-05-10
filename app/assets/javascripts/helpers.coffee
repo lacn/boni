@@ -236,7 +236,7 @@ class HandlerHelper
    * Create deferred geolocation request.
    * @return {DeferHandler} Deferred request for geolocation, resolved when
   ###
-  getGeolocation: =>
+  startGeolocationWatch: =>
     # Instantiate DeferHandler with watch option.
     deferred = new DeferHandler true
     if navigator.geolocation?
