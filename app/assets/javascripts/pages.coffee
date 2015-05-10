@@ -96,5 +96,5 @@ buildMap = (center) ->
       # Set listener for window resize event, updates centered point on map.
       google.maps.event.addDomListener window, 'resize', -> centerMap handler
 
-# Bind buildMap function to window so it can be accessed from other files.
-window.buildMap = buildMap
+# Call buildMap function on window load event with fixed center coordinates (Ljubljana).
+window.onload = -> buildMap [46.05, 14.5]
