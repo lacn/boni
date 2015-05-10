@@ -72,6 +72,9 @@ buildMap = (center) ->
       # updates stored map center point.
       google.maps.event.addDomListener handler.getMap(), 'idle', -> updateCenter handler
 
+      # Set listener for map drag event, stop watching for user location change.
+      google.maps.event.addDomListener handler.getMap(), 'drag', endGeolocationWatch
+
       # Set listener for window resize event, updates centered point on map.
       google.maps.event.addDomListener window, 'resize', -> centerMap handler
 
