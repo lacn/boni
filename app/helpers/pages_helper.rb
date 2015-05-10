@@ -1,12 +1,10 @@
 module PagesHelper
   def latitude
-    latitude = Geocoder.search(user_ip.to_s).first.latitude
-    # latitude = 46.05 if latitude == 0.0
+    Geocoder.search(user_ip.to_s).first.latitude || 46.05
   end
 
   def longitude
-    longitude = Geocoder.search(user_ip.to_s).first.longitude
-    # longitude = 14.5 if longitude == 0.0
+    Geocoder.search(user_ip.to_s).first.longitude || 14.5
   end
 
   def user_ip
