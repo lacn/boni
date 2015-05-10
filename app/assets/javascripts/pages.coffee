@@ -48,6 +48,8 @@ buildMap = (center) ->
       startGeolocationWatch = ->
         # Show loader icon.
         HandlerHelper.addClass loaderIconEl, 'active'
+        # Start with first call state.
+        firstCall = true
         # Get getGeolocation using browser API.
         Helper.startGeolocationWatch().done (newCenter) ->
           # Center map on just updated `newCenter`.
@@ -56,8 +58,11 @@ buildMap = (center) ->
           updateCenter handler
           # Location loading done, hide loader icon.
           HandlerHelper.removeClass loaderIconEl, 'active'
-          # Zoom map to initial zoom level.
-          handler.getMap().setZoom ZOOM_LEVEL
+          # If this is first call, zoom the map and set fist call state to false.
+          if firstCall
+            # Zoom map to initial zoom level.
+            handler.getMap().setZoom ZOOM_LEVEL
+            firstCall = false
       endGeolocationWatch = ->
         # Show loader icon.
         HandlerHelper.addClass loaderIconEl, 'active'
