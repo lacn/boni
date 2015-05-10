@@ -19,9 +19,9 @@ class DeferHandler
   ###*
    * @param  {Function} callback (optional) Success callback.
   ###
-  constructor: (callback = ->) ->
+  constructor: (@watch = false) ->
     # Declare `doneListeners` and `failListeners`, add callback to doneListeners
-    @doneListeners = [callback]
+    @doneListeners = []
     @failListeners = []
     @data = undefined
     # Start with in progress state.
@@ -43,13 +43,20 @@ class DeferHandler
 
   ###*
    * Push a function to given listeners list or call it if current state is expected call state.
+   * If `watch` is true, fn is always pushed to list.
    * @param {Function}        fn        Function to be added or called.
    * @param {Array<Function>} list      List where function is added.
    * @param {Number}          callState One of defined `State`s.
    * @param {DeferHandler}    ref       Reference to DeferHandler object.
   ###
-  pushOrCall = (fn, list, callState, ref) =>
-    (if ref.state is callState then fn ref.data else if ref.state is INPROG then list.push fn); this
+  pushOrCall = (fn, list, callState, ref) ->
+    (list.push fn; return ref) if ref.watch
+    (if ref.state is callState then fn ref.data else if ref.state is INPROG then list.push fn); ref
+    # if ref.state is callState
+    #   fn ref.data
+    # else if ref.state is INPROG
+    #   list.push fn
+    # this
 
   ###*
    * Add function to `done` listeners or immediately call it if the state is `DONE` already.
@@ -123,7 +130,8 @@ class RestaurantStorage
    * @param {Function} callback (optional) Function to be called on success.
   ###
   getJSON = (url, callback) ->
-    deferred = new DeferHandler callback
+    deferred = new DeferHandler()
+    deferred.done callback
     req = new XMLHttpRequest()
     # Open new XHR async (hence the true) request on `url`.
     req.open 'GET', url, true
