@@ -7,6 +7,6 @@ class Restaurant < ActiveRecord::Base
 	before_save :geocode, if: ->(obj){ obj.address.present? and obj.address_changed? }
 
 	def price_in_eur
-		self.price/100.00 unless price.nil?
+		"%.2f" % (self.price/100.00) unless price.nil?
 	end
 end
