@@ -37,10 +37,8 @@ buildMap = (center) ->
       id: 'map'
     # Callback function (called when map is initialized).
     ->
-      setTimeout ->
-        Helper.getGeolocation().done (newCenter) ->
-          centerMap handler, newCenter
-        , 1000
+      # Get getGeolocation using browser API.
+      Helper.getGeolocation().done (newCenter) -> centerMap handler, newCenter
       # Add markers to map from localStorage or server data.
       Helper.AddMarkers handler, ->
         # Fit map to added markers bounds.
