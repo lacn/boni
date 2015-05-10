@@ -7,10 +7,15 @@ ZOOM_LEVEL = 18
 
 buildMap = (center) ->
   ###*
+   * Get `#follow-location` DOM element.
+   * @type {Element}
+  ###
+  watchIconEl = document.getElementById 'follow-location'
+  ###*
    * Instantiate HandlerHelper with given `center`.
    * @type {HandlerHelper}
   ###
-  Helper = new HandlerHelper center
+  Helper = new HandlerHelper center, watchIconEl
   ###*
    * Centers the map of passed handler.
    * Using Helper object to get center (initialized from rails).
@@ -18,7 +23,6 @@ buildMap = (center) ->
   ###
   centerMap = (handler, center = Helper.getCenter()) ->
     handler.map.centerOn center
-
   ###*
    * Update center location stored in Helper object.
    * @param {GoogleMapsHandler} handler Handler of Google Maps object.

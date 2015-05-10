@@ -225,7 +225,7 @@ class HandlerHelper
    * Set property center (implicit this.center = center), instantiate `RestaurantStorage`.
    * @param  {Array<Number>} @center Array [lat, lng] of currently centered location.
   ###
-  constructor: (@center) ->
+  constructor: (@center, @watchIconEl) ->
     @restaurantStorage = new RestaurantStorage()
     @version = 0
 
