@@ -1,3 +1,75 @@
+class DeferHandler
+
+  ###*
+   * State: In progress
+   * @type {Number}
+  ###
+  INPROG = 0
+  ###*
+   * State: Done
+   * @type {Number}
+  ###
+  DONE = 1
+  ###*
+   * State: Erorr
+   * @type {Number}
+  ###
+  ERROR = 2
+
+  ###*
+   * @param  {Function} callback (optional) Success callback.
+  ###
+  constructor: (callback = ->) ->
+    # Declare `doneListeners` and `failListeners`, add callback to doneListeners
+    @doneListeners = [callback]
+    @failListeners = []
+    @data = undefined
+    # Start with in progress state.
+    @state = INPROG
+
+  ###*
+   * Push a function to given listeners list or call it if current state is expected call state.
+   * @param {Function}        fn        Function to be added or called.
+   * @param {Array<Function>} list      List where function is added.
+   * @param {Number}          callState One of defined `State`s.
+   * @param {DeferHandler}    ref       Reference to DeferHandler object.
+  ###
+  pushOrCall = (fn, list, callState, ref) =>
+    (if ref.state is callState then fn ref.data else if ref.state is INPROG then list.push fn); this
+
+  ###*
+   * Add function to `done` listeners or immediately call it if the state is `DONE` already.
+   * @param  {Function} fn  Callback function on `done`.
+   * @return {DeferHandler} Reference to `this`.
+  ###
+  done: (fn) => pushOrCall fn, @doneListeners, DONE, this
+
+  ###*
+   * Add function to `fail` listeners or immediately call it if the state is `ERROR` already.
+   * @param  {Function} fn  Callback function on `fail`.
+   * @return {DeferHandler} Reference to `this`.
+  ###
+  fail: (fn) => pushOrCall fn, @doneListeners, ERROR, this
+
+  ###*
+   * Add function to `done` and `fail` or immediately call it if the state is `DONE` or `ERROR`.
+   * @param  {Function} fn  Callback function on `done` or `fail`.
+   * @return {DeferHandler} Reference to `this`.
+  ###
+  always: (fn) => [@done, @fail].forEach (f) -> f fn
+
+  ###*
+   * Resolve all pending listeners.
+   * @param {Any}     data      Data to be passed to listeners.
+   * @param {Boolean} isSuccess True if resolving with success, false otherwise.
+  ###
+  resolveAll: (data, isSuccess) =>
+    @data = data
+    # Set state to done if success or ERROR otherwise.
+    @state = if isSuccess then DONE else ERROR
+    # Use `doneListeners` if success or `failListeners` if not, call functions inside with `data`.
+    (if isSuccess then @doneListeners else @failListeners).forEach (fn) -> fn data
+
 class RestaurantStorage
 
   ###*
@@ -20,6 +92,42 @@ class RestaurantStorage
    * @type {Number}
   ###
   DEFAULT_VERSION = 0
+  ###*
+   * Get restaurants from server API endpoint.
+   * @type {String}
+  ###
+  RESTAURANTS_URL = '/restaurants'
+  ###*
+   * Restaurants data object API endpoint.
+   * @type {String}
+  ###
+  VERSION_URL = '/version'
+
+  ###*
+   * Polyfill for jQuery's getJSON (not implementing all jQuery functionallity).
+   * @param {Strng}   url       URL to make request to.
+   * @param {Function} callback (optional) Function to be called on success.
+  ###
+  getJSON = (url, callback) ->
+    deferred = new DeferHandler callback
+    req = new XMLHttpRequest()
+    # Open new XHR async (hence the true) request on `url`.
+    req.open 'GET', url, true
+    req.onload = ->
+      # If request statuc was in range 200 - 400 (success, redirection).
+      if req.status >= 200 and req.status < 400
+        # Parse `responseText` and resolve all `done` listeners with data.
+        data = if req.responseText.trim().length > 0 then JSON.parse req.responseText else undefined
+        deferred.resolveAll data, true
+      else
+        req.onerror()
+    req.onerror = ->
+      # Resolve all `fail` listeners with `responseText`.
+      deferred.resolveAll req.responseText, false
+    # Send the request.
+    req.send()
+    # Return `deferred` handler.
+    deferred
 
   ###*
    * Get restaurants stored in localStorage object.
@@ -84,19 +192,12 @@ class RestaurantStorage
   ###
   isUpToDate: (serverTimestamp) => @getVersion is serverTimestamp
 
+  getServerRestaurants: (callback) -> getJSON RESTAURANTS_URL, callback
+
+  getServerVersion: (callback) -> getJSON VERSION_URL, callback
+
 
 class HandlerHelper
-
-  ###*
-   * Get restaurants from server API endpoint.
-   * @type {String}
-  ###
-  RESTAURANTS_URL: '/restaurants'
-  ###*
-   * Restaurants data object API endpoint.
-   * @type {String}
-  ###
-  VESION_URL: '/version'
 
   ###*
    * Set property center (implicit this.center = center), instantiate `RestaurantStorage`.
@@ -116,7 +217,7 @@ class HandlerHelper
   ###
   AddMarkers: (handler, callback) ->
     # Begin get server version request, store request to resolve it later.
-    versionRequest = $.getJSON @VESION_URL, (data) => @version = data.version
+    versionRequest = @restaurantStorage.getServerVersion()
     ###*
      * Make maps marker infowindow.
      * @param {Restaurant} obj Restaurant object (described at `RestaurantStorage.getRestaurants`).
@@ -158,7 +259,7 @@ class HandlerHelper
         # If local data is not up to date with server data, get data from server.
         # Use `RestaurantStorage.setRestaurants` to update locally stored data.
         # Store request to resolve it later.
-        getDataReq = $.getJSON @RESTAURANTS_URL, @restaurantStorage.setRestaurants
+        getDataReq = @restaurantStorage.getServerRestaurants @restaurantStorage.setRestaurants
       # Add recieved data as map markers.
       getDataReq.done makeMarkers
     # If version is defined (was recieved from server), call loadData(), otherwise
