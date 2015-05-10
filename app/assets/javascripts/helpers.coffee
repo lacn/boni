@@ -232,6 +232,15 @@ class HandlerHelper
   getCenter: => @center
   setCenter: (@center) =>
 
+  getGeolocation: =>
+    deferred = new DeferHandler true
+    if 'geolocation' not in navigator
+      deferred.resolveAll @center, true
+    else
+      navigator.geolocation.watchPosition (position) ->
+        deferred.resolveAll [position.coords.latitude, position.coords.longitude], true
+    deferred
+
   ###*
    * Add server restaurants as map markers.
    * @param {Gmaps handler}   handler   Handler object for maps.
