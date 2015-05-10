@@ -37,12 +37,6 @@ buildMap = (center) ->
       id: 'map'
     # Callback function (called when map is initialized).
     ->
-      # Get getGeolocation using browser API.
-      Helper.getGeolocation().done (newCenter) ->
-        # Center map on just updated `newCenter`.
-        centerMap handler, newCenter
-        # Store `newCenter`, which is currently map center.
-        updateCenter()
       # Add markers to map from localStorage or server data.
       Helper.AddMarkers handler, ->
         # Fit map to added markers bounds.
@@ -51,6 +45,12 @@ buildMap = (center) ->
         centerMap handler, Helper.getCenter()
         # Set map zoom to `ZOOM_LEVEL` value.
         handler.getMap().setZoom ZOOM_LEVEL
+        # Get getGeolocation using browser API.
+        Helper.getGeolocation().done (newCenter) ->
+          # Center map on just updated `newCenter`.
+          centerMap handler, newCenter
+          # Store `newCenter`, which is currently map center.
+          updateCenter handler
 
       # Set listener for map idle event (when everything updates after move, zoom or resize),
       # updates stored map center point.
