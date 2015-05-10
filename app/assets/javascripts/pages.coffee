@@ -29,7 +29,7 @@ buildMap = (center) ->
    * Instantiate a Google maps handler.
    * @type {Gmaps handler}
   ###
-  handler = Gmaps.build 'Google'
+  handler = Gmaps.build 'Google', true, false
   # Build a map inside `#map` element.
   handler.buildMap
     internal:
