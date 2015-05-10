@@ -41,6 +41,18 @@ buildMap = (center) ->
       id: 'map'
     # Callback function (called when map is initialized).
     ->
+      # Save functions to start and end watching for geolocation changes.
+      # Watch starts at the beginning and ends when map is first dragged
+      #   or when user presses the `#follow-location` button.
+      startGeolocationWatch = ->
+        # Get getGeolocation using browser API.
+        Helper.startGeolocationWatch().done (newCenter) ->
+          # Center map on just updated `newCenter`.
+          centerMap handler, newCenter
+          # Store `newCenter`, which is currently map center.
+          updateCenter handler
+      endGeolocationWatch = Helper.endGeolocationWatch
+
       # Add markers to map from localStorage or server data.
       Helper.AddMarkers handler, ->
         # Fit map to added markers bounds.
@@ -49,12 +61,8 @@ buildMap = (center) ->
         centerMap handler, Helper.getCenter()
         # Set map zoom to `ZOOM_LEVEL` value.
         handler.getMap().setZoom ZOOM_LEVEL
-        # Get getGeolocation using browser API.
-        Helper.getGeolocation().done (newCenter) ->
-          # Center map on just updated `newCenter`.
-          centerMap handler, newCenter
-          # Store `newCenter`, which is currently map center.
-          updateCenter handler
+        startGeolocationWatch()
+
 
       # Set listener for map idle event (when everything updates after move, zoom or resize),
       # updates stored map center point.
