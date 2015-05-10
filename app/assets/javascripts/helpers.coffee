@@ -28,6 +28,20 @@ class DeferHandler
     @state = INPROG
 
   ###*
+   * Check if given `obj` is a function.
+   * @param {Any} obj   Value to be checked.
+   * @return {Boolean}  True if it's function, false otherwise.
+  ###
+  isFunction = (obj) -> typeof obj is 'function'
+
+  ###*
+   * Call all functions in given array..
+   * @param {Array<Function>} list Array of functions to be called.
+   * @param {Any}             data Data to be passed to called function.
+  ###
+  callAll = (list, data) -> list.forEach (fn) -> fn data if isFunction fn
+
+  ###*
    * Push a function to given listeners list or call it if current state is expected call state.
    * @param {Function}        fn        Function to be added or called.
    * @param {Array<Function>} list      List where function is added.
@@ -68,7 +82,7 @@ class DeferHandler
     # Set state to done if success or ERROR otherwise.
     @state = if isSuccess then DONE else ERROR
     # Use `doneListeners` if success or `failListeners` if not, call functions inside with `data`.
-    (if isSuccess then @doneListeners else @failListeners).forEach (fn) -> fn data
+    callAll (if isSuccess then @doneListeners else @failListeners), data
 
 class RestaurantStorage
 
