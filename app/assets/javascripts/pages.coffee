@@ -51,7 +51,9 @@ buildMap = (center) ->
           centerMap handler, newCenter
           # Store `newCenter`, which is currently map center.
           updateCenter handler
-      endGeolocationWatch = Helper.endGeolocationWatch
+      endGeolocationWatch = ->
+        # Call helper method to end watching for geolocation changes.
+        Helper.endGeolocationWatch()
 
       # Add markers to map from localStorage or server data.
       Helper.AddMarkers handler, ->
