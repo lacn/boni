@@ -3,7 +3,7 @@
  * Level of map zoom on page load.
  * @type {Number}
 ###
-ZOOM_LEVEL = 15
+ZOOM_LEVEL = 18
 
 buildMap = (center) ->
   ###*
