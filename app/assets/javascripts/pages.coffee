@@ -46,7 +46,7 @@ buildMap = (center) ->
         # Fit map to added markers bounds.
         handler.fitMapToBounds()
         # Center map on initial position.
-        centerMap handler, center
+        centerMap handler, Helper.getCenter()
         # Set map zoom to `ZOOM_LEVEL` value.
         handler.getMap().setZoom ZOOM_LEVEL
 
