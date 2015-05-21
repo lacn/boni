@@ -84,7 +84,7 @@ Rails.application.configure do
     :email => {
       :email_prefix => "[ERROR] ",
       :sender_address => %{"Boni" <boni@boni.si>},
-      :exception_recipients => ENV["EXCEPTION_RECIPIENT"]
+      :exception_recipients => %w{ENV["EXCEPTION_RECIPIENT_1"], ENV["EXCEPTION_RECIPIENT_2"]}
     }
 
   config.action_mailer.delivery_method = :smtp
@@ -93,7 +93,7 @@ Rails.application.configure do
     :port =>                 '587',
     :user_name =>             ENV["MANDRILL_USERNAME"],
     :password =>              ENV["MANDRILL_APIKEY"],
-    :domain =>               'heroku.com',
+    :domain =>               'gresak.io',
     :authentication =>       :plain
   }
 end
