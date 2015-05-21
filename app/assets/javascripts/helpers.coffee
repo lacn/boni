@@ -117,12 +117,12 @@ class RestaurantStorage
    * Get restaurants from server API endpoint.
    * @type {String}
   ###
-  RESTAURANTS_URL = '/restaurants'
+  RESTAURANTS_URL = location.pathname.substring(1) + '/restaurants'
   ###*
    * Restaurants data object API endpoint.
    * @type {String}
   ###
-  VERSION_URL = '/version'
+  VERSION_URL = location.pathname.substring(1) + '/version'
 
   ###*
    * Polyfill for jQuery's getJSON (not implementing all jQuery functionallity).
