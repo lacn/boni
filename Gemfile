@@ -58,3 +58,6 @@ gem 'newrelic_rpm'
 gem 'react-rails', github: 'reactjs/react-rails'
 
 gem 'exception_notification'
+
+gem 'capistrano', '~> 3.3.5'
+gem 'capistrano-rails', '~> 1.1.2'
