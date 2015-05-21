@@ -26,5 +26,3 @@
 # Ignore application configuration
 /config/application.yml
 .capistrano
-
-Gemfile.lock
