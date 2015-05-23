@@ -78,7 +78,7 @@ buildMap = (center) ->
         # Center map on initial position.
         centerMap handler, center
         # Set map zoom to `ZOOM_LEVEL` value.
-        handler.getMap().setZoom ZOOM_LEVEL
+        handler.getMap().setZoom 9
 
       # Listen for `watchIconEl` DOM click events.
       watchIconEl.addEventListener 'click', ->
