@@ -1,6 +1,6 @@
 lock '>= 3.1.0'
 set :application, 'boni'
-set :repo_url, 'https://github.com/luxxi/boni'
+set :repo_url, 'https://github.com/lacn/boni'
 
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
