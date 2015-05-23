@@ -78,8 +78,7 @@ buildMap = (center) ->
         # Center map on initial position.
         centerMap handler, center
         # Set map zoom to `ZOOM_LEVEL` value.
-        handler.getMap().setZoom ZOOM_LEVEL
-        startGeolocationWatch()
+        handler.getMap().setZoom 9
 
       # Listen for `watchIconEl` DOM click events.
       watchIconEl.addEventListener 'click', ->
@@ -97,4 +96,4 @@ buildMap = (center) ->
       google.maps.event.addDomListener window, 'resize', -> centerMap handler
 
 # Call buildMap function on window load event with fixed center coordinates (Ljubljana).
-window.onload = -> buildMap [46.05, 14.5]
+window.onload = -> buildMap [46.12, 14.82]
