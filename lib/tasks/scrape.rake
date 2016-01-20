@@ -19,6 +19,12 @@ task scrape: :environment do
     restaurant
   end
 
+  puts '----------------------', 'Not found:', '----------------------'
+
+  (Restaurant.all - added_restaurants).each do |restaurant|
+    log(restaurant)
+    restaurant.destroy
+  end
 end
 
 private
