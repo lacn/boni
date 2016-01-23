@@ -1,9 +1,8 @@
 require 'nokogiri'
 require 'open-uri'
 
-line = '----------------------'
-
 task scrape: :environment do
+  line = '----------------------'
   doc = Nokogiri::HTML(open(ENV['source_url']))
   arr = doc.search('restaurantItem name prices', '//h1 | //h2 | //strong').to_a
 
@@ -15,7 +14,7 @@ task scrape: :environment do
 
     city = City.where(name: address[:city]).update_or_create(name: address[:city])
     restaurant = Restaurant.where(name: data_content[0]).update_or_create(restaurant_params(data_content, address, city))
-    log(restaurant, i)
+    log(restaurant, i, line)
     sleep 1
 
     restaurant
@@ -24,7 +23,7 @@ task scrape: :environment do
   puts line, 'Not found:', line
 
   (Restaurant.all - added_restaurants).each.with_index do |restaurant, i|
-    log(restaurant, i)
+    log(restaurant, i, line)
     restaurant.destroy
   end
 end
@@ -55,6 +54,6 @@ def restaurant_params(data_content, address, city)
   }
 end
 
-def log(restaurant, i)
+def log(restaurant, i, line)
   puts "#{i + 1}.", restaurant.name, restaurant.address, restaurant.city.name, restaurant.price, line
 end
