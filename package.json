@@ -17,6 +17,10 @@
     "test": "rspec"
   },
   "devDependencies": {
-    "eslint": "^2.8.0"
+    "babel-eslint": "^6.0.2",
+    "eslint": "^2.8.0",
+    "eslint-config-airbnb": "^7.0.0",
+    "eslint-plugin-jsx-a11y": "^0.6.2",
+    "eslint-plugin-react": "^5.0.1"
   }
 }
