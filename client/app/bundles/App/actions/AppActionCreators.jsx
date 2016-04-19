@@ -1,8 +1,15 @@
 import actionTypes from '../constants/AppConstants';
 
-export function updateName(name) {
+export function versionRequest() {
+  console.log('versionRequest action');
   return {
-    type: actionTypes.HELLO_WORLD_NAME_UPDATE,
-    name,
+    type: actionTypes.VERSION_REQUEST,
+  };
+}
+
+export function restaurantsResponse(restaurants) {
+  return {
+    type: actionTypes.RESTAURANTS_RESPONSE,
+    restaurants
   };
 }

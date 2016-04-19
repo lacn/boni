@@ -1,6 +1,7 @@
 import Immutable from 'seamless-immutable';
 
 import actionTypes from '../constants/AppConstants';
+import {fetchVersion} from '../helpers/api';
 
 export const initialState = Immutable({
   restaurants: [],
@@ -8,15 +9,19 @@ export const initialState = Immutable({
   center: {
     lat: 46.12,
     lng: 14.82
-  }
+  },
+  loading: false
 });
 
 export default function AppReducer(state = initialState, action) {
-  const { type, name } = action;
 
-  switch (type) {
-    case actionTypes.HELLO_WORLD_NAME_UPDATE:
-      return state.set('name', name);
+  switch (action.type) {
+    case actionTypes.VERSION_REQUEST:
+      fetchVersion();
+      return state.merge({ loading: true });
+
+    case actionTypes.RESTAURANTS_RESPONSE:
+      return state.merge({ restaurants: action.restaurants, loading: false });
 
     default:
       return state;

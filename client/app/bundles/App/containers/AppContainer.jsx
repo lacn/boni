@@ -17,6 +17,9 @@ const App = (props) => {
   const actions = bindActionCreators(AppActionCreators, dispatch);
   const { updateName } = actions;
   const { restaurants, zoom, center } = AppStore;
+  if (props.isClient) {
+    actions.versionRequest();
+  }
 
   // This uses the ES2015 spread operator to pass properties as it is more DRY
   // This is equivalent to:
@@ -36,6 +39,7 @@ App.propTypes = {
   // This allows us to immediately know we don't call AppStore['someProperty'], but
   // instead use the Immutable.js `get` API for Immutable.Map
   AppStore: PropTypes.object.isRequired,
+  isClient: PropTypes.bool
 };
 
 // Don't forget to actually use connect!
