@@ -1,6 +1,3 @@
-<div class="container">
-  <div id="map"></div>
-
-  <span class="icon-direction" id="follow-location"></span>
-  <span class="icon-spinner animate-spin" id="location-loading"></span>
-</div>
+<%= react_component("App",
+                     props: @map_props,
+                     prerender: true) %>

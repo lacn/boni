@@ -5,14 +5,11 @@
 // off for production.
 export default function logger({ getState }) {
   return next => action => {
-    console.log('will dispatch', action);
 
     // Call the next dispatch method in the middleware chain.
     const result = next(action);
 
     const immutableState = getState();
-
-    console.log('state after dispatch', JSON.stringify(immutableState));
 
     // This will likely be the action itself, unless
     // a middleware further in chain changed it.
