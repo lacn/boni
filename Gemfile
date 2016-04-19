@@ -62,6 +62,7 @@ gem 'exception_notification'
 gem 'capistrano', '~> 3.3.5'
 gem 'capistrano-rails', '~> 1.1.2'
 gem 'capistrano-rails-tail-log'
+gem 'capistrano-npm'
 
 gem 'react_on_rails', '~> 5'
 
