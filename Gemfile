@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby "2.2.1"
+ruby '2.2.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 # Use sqlite3 as the database for Active Record
@@ -62,3 +62,5 @@ gem 'exception_notification'
 gem 'capistrano', '~> 3.3.5'
 gem 'capistrano-rails', '~> 1.1.2'
 gem 'capistrano-rails-tail-log'
+
+gem 'react_on_rails', '~> 5'
