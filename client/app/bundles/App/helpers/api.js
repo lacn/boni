@@ -28,7 +28,7 @@ export function fetchVersion() {
     .then(res => res.json())
     .then(json => json.version)
     .then(version => {
-      const currentVersion = getValue(STORAGE_VERSION_KEY).version;
+      const currentVersion = getValue(STORAGE_VERSION_KEY);
       if (!currentVersion || currentVersion < version) {
         storeValue(STORAGE_VERSION_KEY, version);
         return fetchRestaurants();

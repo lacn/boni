@@ -10,5 +10,5 @@ export function storeValue(key, value) {
 
 export function getValue(key) {
   const value = localStorage[getFullKey(key)];
-  return value ? JSON.parse(value) : {};
+  return value && JSON.parse(value);
 }
