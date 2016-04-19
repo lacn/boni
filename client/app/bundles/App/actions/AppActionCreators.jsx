@@ -1,4 +1,4 @@
-import actionTypes from '../constants/helloWorldConstants';
+import actionTypes from '../constants/AppConstants';
 
 export function updateName(name) {
   return {

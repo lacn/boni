@@ -1,9 +1,9 @@
 import Immutable from 'seamless-immutable';
 
-import actionTypes from '../constants/helloWorldConstants';
+import actionTypes from '../constants/AppConstants';
 
 export const initialState = Immutable({
-  restaurants: {},
+  restaurants: [],
   zoom: 9,
   center: {
     lat: 46.12,
@@ -11,7 +11,7 @@ export const initialState = Immutable({
   }
 });
 
-export default function helloWorldReducer(state = initialState, action) {
+export default function AppReducer(state = initialState, action) {
   const { type, name } = action;
 
   switch (type) {
