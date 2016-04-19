@@ -10,8 +10,12 @@ import {getValue, storeValue} from './localStorageManager';
 
 import {restaurantsResponse} from '../actions/AppActionCreators';
 
+function fetchApi(endPoint) {
+  return fetch(`${location.pathname.substring(1)}/${endPoint}`);
+}
+
 export function fetchRestaurants() {
-  fetch(RESTAURANTS_ENDPOINT)
+  fetchApi(RESTAURANTS_ENDPOINT)
     .then(res => res.json())
     .then(restaurants => {
       storeValue(STORAGE_RESTAURANTS_KEY, restaurants);
@@ -20,7 +24,7 @@ export function fetchRestaurants() {
 }
 
 export function fetchVersion() {
-  fetch(VERSION_ENDPOINT)
+  fetchApi(VERSION_ENDPOINT)
     .then(res => res.json())
     .then(json => json.version)
     .then(version => {
