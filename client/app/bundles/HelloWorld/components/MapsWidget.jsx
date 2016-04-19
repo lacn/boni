@@ -3,7 +3,7 @@ import GoogleMap from 'google-map-react';
 
 export default class MapsWidget extends React.Component {
   static propTypes = {
-    restaurants: PropTypes.object.isRequired,
+    restaurants: PropTypes.array.isRequired,
     zoom: PropTypes.number.isRequired,
     center: PropTypes.object.isRequired
   };

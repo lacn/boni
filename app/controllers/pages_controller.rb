@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   def home
     @map_props = {
-      restaurants: {},
+      restaurants: [],
       zoom: 9,
       center: {
         lat: 46.12,
