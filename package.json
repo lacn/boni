@@ -15,5 +15,8 @@
     "build:dev:client": "(cd client && npm run build:dev:client --silent)",
     "build:dev:server": "(cd client && npm run build:dev:server --silent)",
     "test": "rspec"
+  },
+  "devDependencies": {
+    "eslint": "^2.8.0"
   }
 }
