@@ -64,3 +64,5 @@ gem 'capistrano-rails', '~> 1.1.2'
 gem 'capistrano-rails-tail-log'
 
 gem 'react_on_rails', '~> 5'
+
+gem 'therubyracer', platforms: :ruby

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'hello_world', to: 'hello_world#index'
   root 'pages#home'
   get 'restaurants' => 'pages#restaurants', defaults: { format: 'json' }
   get 'version' => 'pages#version', defaults: { format: 'json' }
