@@ -15,8 +15,6 @@ class PagesController < ApplicationController
   end
 
   def version
-    respond_to do |format|
-      format.json { render json: Version.first }
-    end
+    @version = Version.first
   end
 end
