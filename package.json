@@ -1,6 +1,6 @@
 {
-  "name": "react-webpack-rails-tutorial",
-  "version": "0.0.1",
+  "name": "boni",
+  "version": "1.0.0",
   "engines": {
     "node": "5.10.0",
     "npm": "3.5.0"
