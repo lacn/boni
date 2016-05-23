@@ -1,28 +1,67 @@
 import React, { PropTypes } from 'react';
-import GoogleMap from 'google-map-react';
+import { GoogleMapLoader, GoogleMap } from 'react-google-maps';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import * as MapsWidgetActionCreators from '../actions/MapsWidgetActionCreators';
 import RestaurantMarker from './RestaurantMarker';
 
-export default class MapsWidget extends React.Component {
+class MapsWidget extends React.Component {
   static propTypes = {
-    restaurants: PropTypes.array.isRequired,
+    restaurants: PropTypes.array,
     zoom: PropTypes.number.isRequired,
-    center: PropTypes.object.isRequired
+    center: PropTypes.object.isRequired,
+    actions: PropTypes.object,
   };
 
+  handleOnClick = (i) => {
+    this.props.restaurants[i].showInfo = true;
+  }
+
+  handleOnClose = (i) => {
+    this.props.restaurants[i].showInfo = false;
+  }
+
   renderRestaurants() {
-    return this.props.restaurants.map(restaurant => <RestaurantMarker {...restaurant} />);
+    if (!this.props.restaurants) {
+      return null;
+    }
+    return this.props.restaurants.asMutable().map((restaurant, i) => (
+      <RestaurantMarker
+        key={i}
+        {...restaurant}
+        handleOnClick={this.props.actions.handleOnClick}
+        handleOnClose={this.props.actions.handleOnClose}
+      />
+    ));
   }
 
   render() {
     const {center, zoom} = this.props;
 
     return (
-      <GoogleMap
-        defaultCenter={center}
-        defaultZoom={zoom}>
-        { this.renderRestaurants() }
-      </GoogleMap>
+      <GoogleMapLoader
+        containerElement={
+          <div style={{width: '100vw', height: '100vh'}}></div>
+        }
+        googleMapElement={
+          <GoogleMap defaultCenter={center} defaultZoom={zoom}>
+            { this.renderRestaurants() }
+          </GoogleMap>
+        }
+      />
     );
   }
 }
+
+function mapStateToProps(state) {
+  return state.AppStore;
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(MapsWidgetActionCreators, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MapsWidget);

@@ -1,10 +1,9 @@
 import actionTypes from '../constants/AppConstants';
 
-export function versionRequest() {
-  console.log('versionRequest action');
-  console.log('env', process.env.NODE_ENV);
+export function versionRequest(actionCreators) {
   return {
     type: actionTypes.VERSION_REQUEST,
+    actionCreators
   };
 }
 

@@ -2,7 +2,9 @@ import mirrorCreator from 'mirror-creator';
 
 const actionTypes = mirrorCreator([
   'RESTAURANTS_RESPONSE',
-  'VERSION_REQUEST'
+  'VERSION_REQUEST',
+  'MAP_MARKER_CLICK',
+  'MAP_INFO_CLOSE',
 ]);
 
 export default actionTypes;

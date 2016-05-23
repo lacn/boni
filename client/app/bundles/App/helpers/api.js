@@ -8,14 +8,13 @@ import {
 
 import {getValue, storeValue} from './localStorageManager';
 
-import {restaurantsResponse} from '../actions/AppActionCreators';
-
-function fetchApi(endPoint) {
-  return fetch(`${location.pathname.substring(1)}/${endPoint}`);
+function getEndpointPath(endpoint) {
+  const basePath = process.env.NODE_ENV === 'development' ? 'https://gresak.io/boni' : location.pathname.substring(1);
+  return `${basePath}/${endpoint}`;
 }
 
 export function fetchRestaurants() {
-  fetchApi(RESTAURANTS_ENDPOINT)
+  fetch(getEndpointPath(RESTAURANTS_ENDPOINT))
     .then(res => res.json())
     .then(restaurants => {
       storeValue(STORAGE_RESTAURANTS_KEY, restaurants);
@@ -23,8 +22,8 @@ export function fetchRestaurants() {
     });
 }
 
-export function fetchVersion() {
-  fetchApi(VERSION_ENDPOINT)
+export function fetchVersion(actionCreators) {
+  fetch(getEndpointPath(VERSION_ENDPOINT))
     .then(res => res.json())
     .then(json => json.version)
     .then(version => {
@@ -35,5 +34,5 @@ export function fetchVersion() {
       }
       return getValue(STORAGE_RESTAURANTS_KEY);
     })
-    .then(restaurantsResponse);
+    .then(actionCreators.restaurantsResponse);
 }
