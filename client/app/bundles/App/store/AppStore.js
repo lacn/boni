@@ -6,8 +6,10 @@ import { compose, createStore, applyMiddleware, combineReducers } from 'redux';
 // once your app has asynchronous actions.
 import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise';
+import createLogger from 'redux-logger';
 
 import reducers, { initialStates } from '../reducers';
+import blankLogger from '../../../lib/middlewares/loggerMiddleware';
 
 export default () => {
   // This is how we get initial props Rails into redux.
@@ -20,7 +22,11 @@ export default () => {
 
   const reducer = combineReducers(reducers);
   const composedStore = compose(
-    applyMiddleware(thunkMiddleware, promiseMiddleware)
+    applyMiddleware(
+      thunkMiddleware,
+      promiseMiddleware,
+      process.env.NODE_ENV === 'development' ? createLogger() : blankLogger
+    )
   );
   const storeCreator = composedStore(createStore);
   const store = storeCreator(reducer, initialState);
