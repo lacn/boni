@@ -27,7 +27,7 @@
 /config/application.yml
 .capistrano
 # React on Rails
-npm-debug.log
+npm-debug.log*
 node_modules
 
 # Generated js bundles

@@ -11,7 +11,7 @@ export default (props) => {
   const store = createStore(props);
   const reactComponent = (
     <Provider store={store}>
-      <App isClient={true} />
+      <App isClient />
     </Provider>
   );
   return reactComponent;

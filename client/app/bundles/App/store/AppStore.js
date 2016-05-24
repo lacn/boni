@@ -7,14 +7,9 @@ import { compose, createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from 'redux-promise';
 
-// This provides an example of logging redux actions to the console.
-// You'd want to disable this for production.
-import loggerMiddleware from 'lib/middlewares/loggerMiddleware';
+import reducers, { initialStates } from '../reducers';
 
-import reducers from '../reducers';
-import { initialStates } from '../reducers';
-
-export default props => {
+export default () => {
   // This is how we get initial props Rails into redux.
   const { AppState } = initialStates;
 
@@ -25,7 +20,7 @@ export default props => {
 
   const reducer = combineReducers(reducers);
   const composedStore = compose(
-    applyMiddleware(thunkMiddleware, promiseMiddleware, loggerMiddleware)
+    applyMiddleware(thunkMiddleware, promiseMiddleware)
   );
   const storeCreator = composedStore(createStore);
   const store = storeCreator(reducer, initialState);
