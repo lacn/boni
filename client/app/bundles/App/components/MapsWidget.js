@@ -36,10 +36,6 @@ class MapsWidget extends React.Component {
     }
   }
 
-  locationLoadedAndExists(props = this.props) {
-    return Boolean(!props.loadingLocation && props.location);
-  }
-
   renderRestaurants() {
     if (!this.props.restaurants) {
       return null;
@@ -54,12 +50,11 @@ class MapsWidget extends React.Component {
   }
 
   render() {
-    const {center, location} = this.props;
+    const {center, location, loadingLocation} = this.props;
 
-    const locationLoadedAndExists = this.locationLoadedAndExists();
-    const defaultCenter = locationLoadedAndExists ? location : center;
-    const defaultZoom = locationLoadedAndExists ? MAP_GEOLOCATON_ZOOM : MAP_COUNTRY_ZOOM;
-
+    const locationLoadedAndExists = Boolean(!loadingLocation && location);
+    const mapCenter = locationLoadedAndExists ? location : center;
+    const mapZoom = locationLoadedAndExists ? MAP_GEOLOCATON_ZOOM : MAP_COUNTRY_ZOOM;
 
     return (
       <GoogleMapLoader
@@ -69,8 +64,8 @@ class MapsWidget extends React.Component {
         googleMapElement={
           <GoogleMap
             ref="map"
-            center={defaultCenter}
-            zoom={defaultZoom}
+            center={mapCenter}
+            zoom={mapZoom}
           >
             {this.renderRestaurants()}
           </GoogleMap>
