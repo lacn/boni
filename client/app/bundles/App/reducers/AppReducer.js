@@ -65,6 +65,7 @@ export default function AppReducer(state = initialState, action) {
     case actionTypes.MAP_GEOLOCATON_TOGGLE_WATCH:
       return state.merge({
         locationWatch: nextLocationWatch(state, action),
+        loadingLocation: nextLocationWatch(state, action),
         // Returns watchId, merge it in state.
         watchId: toggleWatch(prepareToggleWatchArgs(state, action))
       });
