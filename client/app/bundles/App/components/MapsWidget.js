@@ -19,6 +19,7 @@ class MapsWidget extends React.Component {
     loadingLocation: PropTypes.bool,
     locationWatch: PropTypes.bool,
     locationError: PropTypes.string,
+    loadingApp: PropTypes.bool,
   };
 
   componentWillMount() {
@@ -53,7 +54,7 @@ class MapsWidget extends React.Component {
   }
 
   render() {
-    const {center, location, loadingLocation, locationWatch, actions} = this.props;
+    const {center, location, loadingLocation, locationWatch, actions, loadingApp} = this.props;
 
     const locationLoadedAndExists = Boolean(!loadingLocation && location);
     const mapCenter = locationLoadedAndExists ? location : center;
@@ -71,10 +72,11 @@ class MapsWidget extends React.Component {
             ref="map"
             center={mapCenter}
             zoom={mapZoom}
-            onCenterChanged={() => toggleLocationWatch(false)}
+            onCenterChanged={() => locationWatch && toggleLocationWatch(false)}
           >
             {this.renderRestaurants()}
             <FollowLocation
+              loadingApp={loadingApp}
               loadingLocation={loadingLocation}
               locationWatch={locationWatch}
               toggleLocationWatch={toggleLocationWatch}

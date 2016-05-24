@@ -1,20 +1,19 @@
 import React, {PropTypes} from 'react';
 import cx from 'classnames';
 
-const FollowLocation = ({loadingLocation, locationWatch, toggleLocationWatch}) => (
-  <div onClick={() => toggleLocationWatch()}>
-    <span
-      id="follow-location"
-      className={cx('icon-direction', {active: locationWatch})}
-    />
-    <span
-      id="location-loading"
-      className={cx('icon-spinner animate-spin', {active: loadingLocation})}
-    />
+const FollowLocation = ({loadingApp, loadingLocation, locationWatch, toggleLocationWatch}) => (
+  <div
+    onClick={() => toggleLocationWatch()}
+    className={cx('follow-location-wrapper', {invisible: loadingApp})}
+  >
+    <button className="follow-location">
+      <div className={cx('follow-location-icon', {loading: loadingLocation, active: locationWatch})}/>
+    </button>
   </div>
 );
 
 FollowLocation.propTypes = {
+  loadingApp: PropTypes.bool,
   loadingLocation: PropTypes.bool,
   locationWatch: PropTypes.bool,
   toggleLocationWatch: PropTypes.func
