@@ -7,9 +7,8 @@ export function handleOnClick(i) {
   };
 }
 
-export function handleOnClose(i) {
+export function handleOnClose() {
   return {
     type: actionTypes.MAP_INFO_CLOSE,
-    i
   };
 }
