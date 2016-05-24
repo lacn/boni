@@ -12,14 +12,25 @@ class MapsWidget extends React.Component {
     zoom: PropTypes.number.isRequired,
     center: PropTypes.object.isRequired,
     actions: PropTypes.object,
+    isClient: PropTypes.bool
   };
 
-  handleOnClick = (i) => {
-    this.props.restaurants[i].showInfo = true;
+  componentWillMount() {
+    if (this.props.isClient) {
+      window.addEventListener('keyup', this.closeOnEsc);
+    }
   }
 
-  handleOnClose = (i) => {
-    this.props.restaurants[i].showInfo = false;
+  componentWillUnmount() {
+    if (this.props.isClient) {
+      window.removeEventListener('keyup', this.closeOnEsc);
+    }
+  }
+
+  closeOnEsc = (keyUpEvent) => {
+    if (keyUpEvent.keyCode === 27) {
+      this.props.actions.handleOnClose();
+    }
   }
 
   renderRestaurants() {

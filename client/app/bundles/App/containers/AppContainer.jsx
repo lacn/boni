@@ -27,7 +27,7 @@ const App = ({ restaurants, zoom, center, isClient, actions }) => {
   // This is equivalent to:
   // <MapsWidget AppStore={AppStore} actions={actions} />
   return (
-    <MapsWidget { ...{restaurants, zoom, center} } />
+    <MapsWidget isClient={isClient} { ...{restaurants, zoom, center} } />
   );
 };
 
