@@ -57,13 +57,9 @@ class MapsWidget extends React.Component {
     const {center, location} = this.props;
 
     const locationLoadedAndExists = this.locationLoadedAndExists();
-    console.log('locationLoadedAndExists', locationLoadedAndExists)
     const defaultCenter = locationLoadedAndExists ? location : center;
     const defaultZoom = locationLoadedAndExists ? MAP_GEOLOCATON_ZOOM : MAP_COUNTRY_ZOOM;
 
-    console.log(location)
-    console.log('defaultCenter', defaultCenter)
-    console.log(defaultZoom)
 
     return (
       <GoogleMapLoader

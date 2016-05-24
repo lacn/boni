@@ -22,7 +22,6 @@ export function locationRequest(actionCreators) {
 }
 
 export function locationResponse({location = null, locationError = ''}) {
-  console.log('send LOCATION_RESPONSE')
   return {
     type: actionTypes.LOCATION_RESPONSE,
     location,

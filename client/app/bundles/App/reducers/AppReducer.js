@@ -42,7 +42,6 @@ export default function AppReducer(state = initialState, action) {
       return state.merge({ loadingLocation: true });
 
     case actionTypes.LOCATION_RESPONSE:
-      console.log('got LOCATION_RESPONSE')
       return state.merge({
         location: action.location,
         locationError: action.locationError,
