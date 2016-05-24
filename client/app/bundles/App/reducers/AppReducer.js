@@ -2,7 +2,7 @@ import immutable from 'seamless-immutable';
 
 import actionTypes, {MAP_COUNTRY_LOCATION} from '../constants/AppConstants';
 import {fetchVersion} from '../helpers/api';
-import getGeolocation from '../helpers/getGeolocation';
+import {getGeolocation, toggleWatch} from '../helpers/geolocation';
 
 export const initialState = immutable({
   restaurants: null,
@@ -11,6 +11,8 @@ export const initialState = immutable({
   loadingLocation: false,
   location: null,
   locationError: '',
+  locationWatch: false,
+  locationWatchId: null,
 });
 
 function mapRestaurants(restaurants, showInfoFn = () => false) {
@@ -19,6 +21,18 @@ function mapRestaurants(restaurants, showInfoFn = () => false) {
       ...r,
       showInfo: showInfoFn(r, i)
     }))
+  };
+}
+
+function nextLocationWatch(state, action) {
+  return (typeof action.forcedValue !== 'undefined') ? action.forcedValue : !state.locationWatch;
+}
+
+function prepareToggleWatchArgs(state, action) {
+  return {
+    nextLocationWatchState: nextLocationWatch(state, action),
+    locationResponse: action.actionCreators.locationResponse,
+    watchId: state.watchId,
   };
 }
 
@@ -38,7 +52,7 @@ export default function AppReducer(state = initialState, action) {
       return state.merge(mapRestaurants(state.restaurants));
 
     case actionTypes.LOCATION_REQUEST:
-      getGeolocation(action.actionCreators);
+      getGeolocation(action.actionCreators.locationResponse);
       return state.merge({ loadingLocation: true });
 
     case actionTypes.LOCATION_RESPONSE:
@@ -46,6 +60,13 @@ export default function AppReducer(state = initialState, action) {
         location: action.location,
         locationError: action.locationError,
         loadingLocation: false
+      });
+
+    case actionTypes.MAP_GEOLOCATON_TOGGLE_WATCH:
+      return state.merge({
+        locationWatch: nextLocationWatch(state, action),
+        // Returns watchId, merge it in state.
+        watchId: toggleWatch(prepareToggleWatchArgs(state, action))
       });
 
     default:

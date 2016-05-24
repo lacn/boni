@@ -130,7 +130,7 @@ body,
 $iconColor: #4183d7;
 #follow-location {
   position: absolute;
-  right: 0;
+  right: 1em;
   bottom: 0.5em;
   z-index: 9999;
   text-shadow: 1px 3px 2px #555;
@@ -143,7 +143,7 @@ $iconColor: #4183d7;
 }
 #location-loading {
   position: absolute;
-  right: 1.5em;
+  right: 5em;
   bottom: 3.4em;
   z-index: 9999;
   color: #333;

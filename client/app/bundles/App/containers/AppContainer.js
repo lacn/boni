@@ -21,7 +21,6 @@ function mapDispatchToProps(dispatch) {
 const App = ({ restaurants, zoom, center, isClient, actions }) => {
   if (isClient && !restaurants) {
     actions.versionRequest(actions);
-    actions.locationRequest(actions);
   }
 
   // This uses the ES2015 spread operator to pass properties as it is more DRY

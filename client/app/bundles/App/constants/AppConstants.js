@@ -6,7 +6,8 @@ const actionTypes = mirrorCreator([
   'MAP_MARKER_CLICK',
   'MAP_INFO_CLOSE',
   'LOCATION_REQUEST',
-  'LOCATION_RESPONSE'
+  'LOCATION_RESPONSE',
+  'MAP_GEOLOCATON_TOGGLE_WATCH'
 ]);
 
 export default actionTypes;

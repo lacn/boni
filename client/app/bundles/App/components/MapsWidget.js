@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import * as MapsWidgetActionCreators from '../actions/MapsWidgetActionCreators';
-import RestaurantMarker from './RestaurantMarker';
+import * as AppActionCreators from '../actions/AppActionCreators';
 import {MAP_COUNTRY_ZOOM, MAP_GEOLOCATON_ZOOM} from '../constants/AppConstants';
+import RestaurantMarker from './RestaurantMarker';
+import FollowLocation from './FollowLocation';
 
 class MapsWidget extends React.Component {
   static propTypes = {
@@ -15,6 +17,7 @@ class MapsWidget extends React.Component {
     isClient: PropTypes.bool,
     location: PropTypes.object,
     loadingLocation: PropTypes.bool,
+    locationWatch: PropTypes.bool,
     locationError: PropTypes.string,
   };
 
@@ -43,18 +46,20 @@ class MapsWidget extends React.Component {
 
     return this.props.restaurants.asMutable().map((props, i) => (
       <RestaurantMarker
-        key={i}
+        key={`RestaurantMarker-${i}`}
         {...({...props, ...this.props.actions, mapHolderRef: this.refs.map, i})}
       />
     ));
   }
 
   render() {
-    const {center, location, loadingLocation} = this.props;
+    const {center, location, loadingLocation, locationWatch, actions} = this.props;
 
     const locationLoadedAndExists = Boolean(!loadingLocation && location);
     const mapCenter = locationLoadedAndExists ? location : center;
     const mapZoom = locationLoadedAndExists ? MAP_GEOLOCATON_ZOOM : MAP_COUNTRY_ZOOM;
+
+    const toggleLocationWatch = actions.toggleLocationWatch.bind(null, actions);
 
     return (
       <GoogleMapLoader
@@ -66,8 +71,14 @@ class MapsWidget extends React.Component {
             ref="map"
             center={mapCenter}
             zoom={mapZoom}
+            onCenterChanged={() => toggleLocationWatch(false)}
           >
             {this.renderRestaurants()}
+            <FollowLocation
+              loadingLocation={loadingLocation}
+              locationWatch={locationWatch}
+              toggleLocationWatch={toggleLocationWatch}
+            />
           </GoogleMap>
         }
       />
@@ -81,7 +92,10 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(MapsWidgetActionCreators, dispatch)
+    actions: {
+      ...(bindActionCreators(AppActionCreators, dispatch)),
+      ...(bindActionCreators(MapsWidgetActionCreators, dispatch)),
+    }
   };
 }
 
