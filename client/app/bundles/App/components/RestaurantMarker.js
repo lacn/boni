@@ -39,26 +39,26 @@ class RestaurantMarker extends Component {
     return (
       (lat && lng)
         ? (
-          <Marker
-            key={ref} ref={ref}
-            mapHolderRef={mapHolderRef}
-            position={new google.maps.LatLng(lat, lng)}
-            onClick={() => handleOnClick(i)}
-          >
+        <Marker
+          key={ref} ref={ref}
+          mapHolderRef={mapHolderRef}
+          position={new google.maps.LatLng(lat, lng)}
+          onClick={() => handleOnClick(i)}
+        >
             {
               showInfo
                 ? (
-                  <InfoWindow onCloseclick={() => handleOnClose(i)}>
-                    <div>
-                      <strong>{name}</strong>
-                      <p>{address}, {city}</p>
-                      <p><i>{price}€</i></p>
-                    </div>
-                  </InfoWindow>
+                <InfoWindow onCloseclick={() => handleOnClose(i)}>
+                  <div>
+                    <strong>{name}</strong>
+                    <p>{address}, {city}</p>
+                    <p><i>{price}€</i></p>
+                  </div>
+                </InfoWindow>
                 )
                 : null
             }
-          </Marker>
+        </Marker>
         )
         : null
     );

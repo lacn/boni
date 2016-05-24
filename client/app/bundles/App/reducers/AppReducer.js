@@ -1,9 +1,9 @@
-import Immutable from 'seamless-immutable';
+import immutable from 'seamless-immutable';
 
 import actionTypes from '../constants/AppConstants';
 import {fetchVersion} from '../helpers/api';
 
-export const initialState = Immutable({
+export const initialState = immutable({
   restaurants: null,
   zoom: 9,
   center: {

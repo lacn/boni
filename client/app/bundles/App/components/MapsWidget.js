@@ -56,7 +56,7 @@ class MapsWidget extends React.Component {
         }
         googleMapElement={
           <GoogleMap ref="map" defaultCenter={center} defaultZoom={zoom}>
-            { this.renderRestaurants() }
+            {this.renderRestaurants()}
           </GoogleMap>
         }
       />
