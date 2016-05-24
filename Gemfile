@@ -67,3 +67,5 @@ gem 'capistrano-npm'
 gem 'react_on_rails', '~> 5'
 
 gem 'therubyracer', platforms: :ruby
+
+gem 'rails_12factor', group: :production

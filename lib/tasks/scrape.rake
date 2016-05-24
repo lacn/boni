@@ -33,6 +33,7 @@ private
 def filter_full_address(data)
   # Address is in format "(address, city)", so remove surrounding `()`.
   data.delete!('()')
+  data
 end
 
 def filter_address(data)
