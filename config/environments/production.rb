@@ -34,7 +34,7 @@ Rails.application.configure do
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
-  config.action_controller.asset_host = "https://gresak.io:9999"
+  # config.action_controller.asset_host = "https://gresak.io:9999"
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
