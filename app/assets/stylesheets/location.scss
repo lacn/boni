@@ -64,3 +64,14 @@ $icon-loading-sprite: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAA
     background-position: 0 0;
   }
 }
+
+$location-marker-bg: #4285f4;
+
+.location-marker {
+  border: 2px solid #fff;
+  border-radius: 100%;
+  box-shadow: 0 0 0 6px fade-out($location-marker-bg, 0.7);
+  background: $location-marker-bg;
+  width: 10px;
+  height: 10px;
+}

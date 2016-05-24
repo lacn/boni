@@ -8,6 +8,7 @@ import * as AppActionCreators from '../actions/AppActionCreators';
 import {MAP_COUNTRY_ZOOM, MAP_GEOLOCATON_ZOOM} from '../constants/AppConstants';
 import RestaurantMarker from './RestaurantMarker';
 import FollowLocation from './FollowLocation';
+import LocationMarker from './LocationMarker';
 
 class MapsWidget extends React.Component {
   static propTypes = {
@@ -80,6 +81,11 @@ class MapsWidget extends React.Component {
               loadingLocation={loadingLocation}
               locationWatch={locationWatch}
               toggleLocationWatch={toggleLocationWatch}
+            />
+            <LocationMarker
+              locationWatch={locationWatch}
+              position={mapCenter}
+              mapHolderRef={this.refs.map}
             />
           </GoogleMap>
         }
