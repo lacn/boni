@@ -5,14 +5,17 @@ import { bindActionCreators } from 'redux';
 
 import * as MapsWidgetActionCreators from '../actions/MapsWidgetActionCreators';
 import RestaurantMarker from './RestaurantMarker';
+import {MAP_COUNTRY_ZOOM, MAP_GEOLOCATON_ZOOM} from '../constants/AppConstants';
 
 class MapsWidget extends React.Component {
   static propTypes = {
     restaurants: PropTypes.array,
-    zoom: PropTypes.number.isRequired,
     center: PropTypes.object.isRequired,
-    actions: PropTypes.object,
-    isClient: PropTypes.bool
+    actions: PropTypes.object.isRequired,
+    isClient: PropTypes.bool,
+    location: PropTypes.object,
+    loadingLocation: PropTypes.bool,
+    locationError: PropTypes.string,
   };
 
   componentWillMount() {
@@ -33,6 +36,10 @@ class MapsWidget extends React.Component {
     }
   }
 
+  locationLoadedAndExists(props = this.props) {
+    return Boolean(!props.loadingLocation && props.location);
+  }
+
   renderRestaurants() {
     if (!this.props.restaurants) {
       return null;
@@ -47,7 +54,16 @@ class MapsWidget extends React.Component {
   }
 
   render() {
-    const {center, zoom} = this.props;
+    const {center, location} = this.props;
+
+    const locationLoadedAndExists = this.locationLoadedAndExists();
+    console.log('locationLoadedAndExists', locationLoadedAndExists)
+    const defaultCenter = locationLoadedAndExists ? location : center;
+    const defaultZoom = locationLoadedAndExists ? MAP_GEOLOCATON_ZOOM : MAP_COUNTRY_ZOOM;
+
+    console.log(location)
+    console.log('defaultCenter', defaultCenter)
+    console.log(defaultZoom)
 
     return (
       <GoogleMapLoader
@@ -55,7 +71,11 @@ class MapsWidget extends React.Component {
           <div style={{width: '100vw', height: '100vh'}}></div>
         }
         googleMapElement={
-          <GoogleMap ref="map" defaultCenter={center} defaultZoom={zoom}>
+          <GoogleMap
+            ref="map"
+            defaultCenter={defaultCenter}
+            defaultZoom={defaultZoom}
+          >
             {this.renderRestaurants()}
           </GoogleMap>
         }

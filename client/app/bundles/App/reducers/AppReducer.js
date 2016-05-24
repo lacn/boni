@@ -1,16 +1,16 @@
 import immutable from 'seamless-immutable';
 
-import actionTypes from '../constants/AppConstants';
+import actionTypes, {MAP_COUNTRY_LOCATION} from '../constants/AppConstants';
 import {fetchVersion} from '../helpers/api';
+import getGeolocation from '../helpers/getGeolocation';
 
 export const initialState = immutable({
   restaurants: null,
-  zoom: 9,
-  center: {
-    lat: 46.12,
-    lng: 14.82
-  },
-  loading: false
+  center: MAP_COUNTRY_LOCATION,
+  loading: false,
+  loadingLocation: false,
+  location: null,
+  locationError: '',
 });
 
 function mapRestaurants(restaurants, showInfoFn = () => false) {
@@ -36,6 +36,18 @@ export default function AppReducer(state = initialState, action) {
 
     case actionTypes.MAP_INFO_CLOSE:
       return state.merge(mapRestaurants(state.restaurants));
+
+    case actionTypes.LOCATION_REQUEST:
+      getGeolocation(action.actionCreators);
+      return state.merge({ loadingLocation: true });
+
+    case actionTypes.LOCATION_RESPONSE:
+      console.log('got LOCATION_RESPONSE')
+      return state.merge({
+        location: action.location,
+        locationError: action.locationError,
+        loadingLocation: false
+      });
 
     default:
       return state;

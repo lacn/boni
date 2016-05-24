@@ -13,3 +13,19 @@ export function restaurantsResponse(restaurants) {
     restaurants
   };
 }
+
+export function locationRequest(actionCreators) {
+  return {
+    type: actionTypes.LOCATION_REQUEST,
+    actionCreators
+  };
+}
+
+export function locationResponse({location = null, locationError = ''}) {
+  console.log('send LOCATION_RESPONSE')
+  return {
+    type: actionTypes.LOCATION_RESPONSE,
+    location,
+    locationError
+  };
+}
