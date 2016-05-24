@@ -7,7 +7,7 @@ import {getGeolocation, toggleWatch} from '../helpers/geolocation';
 export const initialState = immutable({
   restaurants: null,
   center: MAP_COUNTRY_LOCATION,
-  loading: false,
+  loadingApp: false,
   loadingLocation: false,
   location: null,
   locationError: '',
@@ -40,10 +40,10 @@ export default function AppReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.VERSION_REQUEST:
       fetchVersion(action.actionCreators);
-      return state.merge({ loading: true });
+      return state.merge({ loadingApp: true });
 
     case actionTypes.RESTAURANTS_RESPONSE:
-      return state.merge({ ...(mapRestaurants(action.restaurants)), loading: false });
+      return state.merge({ ...(mapRestaurants(action.restaurants)), loadingApp: false });
 
     case actionTypes.MAP_MARKER_CLICK:
       return state.merge(mapRestaurants(state.restaurants, (__, i) => i === action.i));
