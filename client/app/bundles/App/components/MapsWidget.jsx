@@ -26,12 +26,11 @@ class MapsWidget extends React.Component {
     if (!this.props.restaurants) {
       return null;
     }
-    return this.props.restaurants.asMutable().map((restaurant, i) => (
+
+    return this.props.restaurants.asMutable().map((props, i) => (
       <RestaurantMarker
         key={i}
-        {...restaurant}
-        handleOnClick={this.props.actions.handleOnClick}
-        handleOnClose={this.props.actions.handleOnClose}
+        {...({...props, ...this.props.actions, mapHolderRef: this.refs.map, i})}
       />
     ));
   }
@@ -45,7 +44,7 @@ class MapsWidget extends React.Component {
           <div style={{width: '100vw', height: '100vh'}}></div>
         }
         googleMapElement={
-          <GoogleMap defaultCenter={center} defaultZoom={zoom}>
+          <GoogleMap ref="map" defaultCenter={center} defaultZoom={zoom}>
             { this.renderRestaurants() }
           </GoogleMap>
         }
