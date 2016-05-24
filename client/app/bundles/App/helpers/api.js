@@ -15,7 +15,7 @@ function getEndpointPath(endpoint) {
 }
 
 export function fetchRestaurants() {
-  fetch(getEndpointPath(RESTAURANTS_ENDPOINT))
+  return fetch(getEndpointPath(RESTAURANTS_ENDPOINT))
     .then(res => res.json())
     .then(restaurants => {
       storeValue(STORAGE_RESTAURANTS_KEY, restaurants);
