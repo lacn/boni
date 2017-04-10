@@ -72,7 +72,7 @@ class MapsWidget extends React.Component {
           <GoogleMap
             ref="map"
             center={mapCenter}
-            zoom={mapZoom}
+            defaultZoom={mapZoom}
             onCenterChanged={() => locationWatch && toggleLocationWatch(false)}
           >
             {this.renderRestaurants()}
