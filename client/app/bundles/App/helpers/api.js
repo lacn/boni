@@ -10,7 +10,7 @@ import {getValue, storeValue} from './localStorageManager';
 
 // Endpoint, including heading `/`
 function getEndpointPath(endpoint) {
-  const basePath = process.env.NODE_ENV === 'development' ? 'https://gresak.io/boni' : location.pathname.substring(1);
+  const basePath = process.env.NODE_ENV === 'development' ? 'https://student-boni.herokuapp.com' : location.pathname.substring(1);
   return `${basePath}${endpoint}`;
 }
 
